@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-
+#include <sys/wait.h>
 // int	main(void)
 // {
 
@@ -21,6 +21,8 @@ int	main(void)
 		n = 1;
 	else
 		n = 6;
+	if (pid != 0)
+		wait();
 	for (i = n; i < n + 5; i++)
 	{
 		printf("%d ", i);
