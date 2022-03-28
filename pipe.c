@@ -72,13 +72,16 @@ int	main(void)
 	int	sum;
 	int	total_sum;
 	int	sum_from_children;
-
+	/* La fonction pipe qui créer le lien entre les deux fd et assure
+	 *la transmission des données. */
 	if (pipe(fd) == -1)
 	{
 		printf("Pipe probleme !\n");
 		return (1);
 	}
 	array_size = sizeof(array) / sizeof(int);
+	/* LA fonction fork qui créer un nouveau processus depuis
+	 * celui en cour d'execution en y copiant les variables bien sur. */
 	pid = fork();
 	if (pid == -1)
 	{
@@ -86,7 +89,7 @@ int	main(void)
 		return (2);
 	}
 
-	if (pid == 0)//Take the partial sum from the child part (start var to size / 2)
+	if (pid == 0) // Take the partial sum from the child part (start var to size / 2)
 	{
 		start = 0;
 		end = array_size / 2;
@@ -96,7 +99,7 @@ int	main(void)
 		start = array_size / 2;
 		end = array_size;
 	}
-	//Calculate the partial sum
+	/* Calculate the partial sum. */
 	i = start;
 	sum = 0;
 	while (i < end)
@@ -104,7 +107,7 @@ int	main(void)
 		sum += array[i];
 		i++;
 	}
-	//Send the sum value to pipe fd[1]
+	/* Send the sum value to pipe fd[1]. */
 	sum_from_children = 0;
 	if (pid == 0)
 	{
@@ -112,7 +115,8 @@ int	main(void)
 		write(fd[1], &sum, sizeof(sum));
 		close(fd[1]);
 	}
-	//Receive the sum form pipe fd[0] from the children and put it into sum_from_children variable
+	/* Receive the sum form pipe fd[0] from the children and put it into
+	 * sum_from_children variable. */
 	else
 	{
 		close(fd[1]);
@@ -120,7 +124,7 @@ int	main(void)
 		close(fd[0]);
 		wait(NULL);
 	}
-	// calculate the sum of all numbers
+	/* calculate the sum of all numbers */
 	if (pid == 0)
 		return(0);
 	total_sum = sum + sum_from_children;
