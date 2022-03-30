@@ -112,7 +112,8 @@ int	main(void)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		write(fd[1], &sum, sizeof(sum));
+		if (write(fd[1], &sum, sizeof(sum)) == -1)
+			return (3);
 		close(fd[1]);
 	}
 	/* Receive the sum form pipe fd[0] from the children and put it into
@@ -120,7 +121,8 @@ int	main(void)
 	else
 	{
 		close(fd[1]);
-		read(fd[0], &sum_from_children, sizeof(sum_from_children));
+		if (read(fd[0], &sum_from_children, sizeof(sum_from_children)) == -1)
+			return (4);
 		close(fd[0]);
 		wait(NULL);
 	}
