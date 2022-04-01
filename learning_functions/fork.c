@@ -5,13 +5,13 @@
 #include <errno.h>
 
 //Basic fork() exemple.
-// int	main(void)
-// {
+int	main(void)
+{
 
-// 	fork();
-// 	printf("Hello world\n");
-// 	return (0);
-// }
+	fork();
+	printf("Hello world\n");
+	return (0);
+}
 
 int	main(void)
 {
@@ -38,5 +38,87 @@ int	main(void)
 	{
 		printf("Waiting for child process to terminate\n");
 	}
+	return (0);
+}
+
+// Fork exercise 1, basic fork
+int	basic_fork(void)
+{
+	int	id;
+
+	id = fork();
+	if (id == -1)
+	{
+		printf("Fork probleme\n");
+		return (1);
+	}
+	if (id == 0)
+		printf("Print form the child process\n");
+	else
+		printf("Print form the parent process\n");
+	return (0);
+}
+
+// Fork exercise 1, Integrate the wait function to wait for child process to finish!
+int	basic_fork_with_wait(void)
+{
+	int	id;
+
+	id = fork();
+	if (id == -1)
+	{
+		printf("Fork probleme\n");
+		return (1);
+	}
+	if (id == 0)
+		printf("Print form the child process\n");
+	else
+	{
+		wait(NULL);
+		printf("Print form the parent process\n");
+	}
+	return (0);
+}
+
+// Fork exercise 1, a fork from a child process
+int	basic_fork_into_a_fork(void)
+{
+	int	id;
+	int	id2;
+
+	id = fork();
+	if (id == -1)
+	{
+		printf("Fork probleme\n");
+		return (1);
+	}
+	if (id == 0)
+	{
+		printf("Print form the child process\n");
+		id2 = fork();
+		if (id2 == -1)
+		{
+			printf("Fork probleme!\n");
+			return (-1);
+		}
+		if (id2 == 0)
+			printf("Print form the second child process\n");
+		else
+		{
+			wait(NULL);
+			printf("Print form the second parent process\n");
+		}
+	}
+	else
+	{
+		wait(NULL);
+		printf("Print form the parent process\n");
+	}
+	return (0);
+}
+
+int	main(void)
+{
+	basic_fork_into_a_fork();
 	return (0);
 }
