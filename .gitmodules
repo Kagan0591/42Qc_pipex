@@ -1,0 +1,6 @@
+[submodule "42Qc_libft"]
+	path = 42Qc_libft
+	url = https://github.com/Kagan0591/42Qc_libft.git
+[submodule "42QC_ft_printf"]
+	path = 42QC_ft_printf
+	url = https://github.com/Kagan0591/42QC_ft_printf.git
