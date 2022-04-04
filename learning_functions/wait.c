@@ -85,7 +85,7 @@ int	demo_wait_status(void)
 	if (id == 0)
 	{
 		printf("this is the child process\n");
-		exec_error = execl("/bin/ping", "bin/ping", "-c", "1", "google.con", NULL);
+		exec_error = execl("/bin/ping", "bin/ping", "-c", "1", "google.com", NULL);
 		if (exec_error == -1)
 		{
 			printf("Exec probleme\n");
@@ -101,7 +101,7 @@ int	demo_wait_status(void)
 		if (WIFEXITED(wait_status))
 		{
 			status_code = WEXITSTATUS(wait_status);
-			printf("The child process have terminated correctly with status code: %d\n", wait_status);
+			printf("The child process have terminated correctly with wait_status code: %d and with status code: %d\n", wait_status, status_code);
 		}
 		else
 		{
