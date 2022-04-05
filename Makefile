@@ -15,11 +15,11 @@ OBJS_FILES 	= $(SRCS_FILES:.c=.o) #$(B_SRCS_FILES:.c=.o)
 
 ## Repertoires ##
 SRCS_DIR 	= srcs/
-#B_SRCS_DIR 	= bonus_srcs/
+#B_SRCS_DIR	= bonus_srcs/
 OBJS_DIR	= objs/
 INCLUDE_DIR = include/
 LIBFT_DIR 	= 42Qc_libft/
-FT_PRINTF_DIR = 42Qc_ft_printf/
+FT_PRINTF_DIR = 42QC_ft_printf/
 
 SRCS 		= $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 #B_SRCS 		= $(addprefix $(B_SRCS_DIR), $(B_SRCS_FILES))
@@ -64,7 +64,7 @@ $(OBJS_DIR)%.o:%.c
 $(NAME): $(OBJS)
 	@${LIBFT}
 	@${FT_PRINTF}
-	@${CC} ${OBJS} -L${LIBFT_DIR} -L${FT_PRINTF_DIR} -lft -o ${NAME} -lm
+	@${CC} ${OBJS} -L${LIBFT_DIR} -L${FT_PRINTF_DIR}/objs -lft -o ${NAME} -lm
 	@echo "\n${BLUE}${BOLD}An executable '${BLINK2} pipex ${END}${BLUE}${BOLD}' have been created successfully!${END}"
 	@sleep 1
 
@@ -93,6 +93,7 @@ clean:
 fclean:	clean
 	@${RM} ${NAME} ${NAME}.dSYM ${OBJS_DIR}
 	@$(LIBFT) fclean
+	@$(FT_PRINTF) fclean
 	@echo "\n${BOLD}${GREEN}The executable file ' ${BLUE}pipex${GREEN} ' have been ${RED}deleted ${END}${BOLD}${GREEN}too.${END}"
 	@sleep 0.5
 re:	fclean all
