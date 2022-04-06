@@ -5,8 +5,9 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <sys/time.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "libft.h"
-# include "ft_printf.h"
 # include <stdio.h>
 
 #endif
