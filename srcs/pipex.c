@@ -2,9 +2,8 @@
 
 static int	execution(char *p_argv, char **p_envp)
 {
-	char	*exec_vector[];
-
-	exec_vector = {"/bin/echo", "Hello", "World", NULL};
+	(void)	p_argv;
+	char	*exec_vector[] = { "echo", "Hello", "World", NULL };
 	if (execve("/bin/echo", exec_vector, p_envp) == -1)
 		return (-1);
 	return (0);
