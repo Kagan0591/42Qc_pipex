@@ -3,7 +3,7 @@
 static int	execution(char *p_argv, char **p_envp)
 {
 	(void)	p_argv;
-	char	*exec_vector[] = { "echo", "Hello", "World", NULL };
+	char	*exec_vector[] = {argv, "Hello", "World", NULL};
 	if (execve("/bin/echo", exec_vector, p_envp) == -1)
 		return (-1);
 	return (0);
@@ -46,3 +46,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
+pipex echo
