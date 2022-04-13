@@ -7,7 +7,10 @@
 # include <sys/time.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include "libft.h"
 # include <stdio.h>
+
+void	clear_char_tab(char **tab, int size);
 
 #endif

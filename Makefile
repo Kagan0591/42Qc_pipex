@@ -7,6 +7,7 @@
 NAME = pipex
 
 SRCS_FILES 		=	pipex.c \
+					pipex_mem.c \
 
 #B_SRCS_FILES	= 	 \
 
