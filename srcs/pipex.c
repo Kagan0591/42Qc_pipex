@@ -2,14 +2,15 @@
 
 static int	execution(char *p_argv, char **p_envp)
 {
-	(void)	p_argv;
-	char	*exec_vector[] = { "echo", "Hello", "World", NULL };
+	char	*exec_vector[] = {p_argv, "Hello", "World", NULL};
+	printf("argv = %s\n", p_argv);
+	printf("exec_vector[0] = %s\n", exec_vector[0]);
 	if (execve("/bin/echo", exec_vector, p_envp) == -1)
 		return (-1);
 	return (0);
 }
 
-static int	pipe_init(int	*p_fd)
+static int	pipe_init(int *p_fd)
 {
 	if (pipe(p_fd) == -1)
 	{
