@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 09:27:40 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/13 19:40:01 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/15 15:50:50 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,45 +39,17 @@ static int	pipe_init(int *p_fd)
 	return (0);
 }
 
-char	*ft_strpatchr(const char *s, char *str, int delemiter)
+char	*find_the_bin_path(char **p_envp)
 {
-	char	*start_of_str;
-	char	*ret_pattern;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	start_of_str = str;
-	while (s[i] || s[i] == '=')
-	{
-		while (s[i] == str[j])
-		{
-			i++;
-			j++;
-		}
-		j = 0;
-		i++;
-
-	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (0);
-}
-
-char	*recup_the_bin_path(char **p_envp)
-{
-	char	*path;
-	ft_strchr()
-
-	while (ft_str_patternret() != -1)
+	recup_the_good_bin_path(p_envp, "echo");
 }
 int	main(int argc, char **argv, char **envp)
 {
-	(void) argc;
-	int	pipe_fd[2];
-	int	fd;
-	int	pid;
+	(void)	argc;
+	int		pipe_fd[2];
+	int		fd;
+	int		pid;
+	char	*bin_path;
 
 	//ARGS check
 	if (argc != 5)
@@ -85,12 +57,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("Args count probleme\n");
 		return (1);
 	}
-	//Access check
-	if (access(argv[1], R_OK | W_OK) == -1)
-	{
-		ft_printf("Access files probleme\n");
-		return (2);
-	}
+	bin_path = find_the_bin_path(envp);
+	ft_printf("%s\n", bin_path);
 
 	if (pipe_init(pipe_fd) == -1) // pipe_fd[0] == read pipe_fd[1] == Write
 		return (3);
@@ -102,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			//child process
 			ft_printf("Child process scope\n");
-			close(pipe_fd[0] )
+			close(pipe_fd[0]);
 			if (execution(argv[2], envp) == -1)
 				return (4);
 			ft_printf("Child scope end\n");

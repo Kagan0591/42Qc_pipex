@@ -6,10 +6,11 @@
 ###---------------------------# VARIABLES ##---------------------------###
 NAME = pipex
 
-SRCS_FILES 		=	pipex.c \
+SRCS_FILES 		=	path.c \
 					pipex_mem.c \
+					pipex.c \
 
-#B_SRCS_FILES	= 	 \
+#B_SRCS_FILES	=	\
 
 ## Nommer les fichiers objets
 OBJS_FILES 	= $(SRCS_FILES:.c=.o) #$(B_SRCS_FILES:.c=.o)
