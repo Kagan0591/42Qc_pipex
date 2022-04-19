@@ -6,18 +6,21 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:01:50 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/15 17:31:35 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/18 20:33:03 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "include/pipex.h"
 
-void	clear_char_tab(char **tab, int size)
+void	clear_char_tab(char **tab)
 {
-	while (size > 0)
+	int	i;
+
+	i = 0;
+	while (tab[i])
 	{
-		free (tab[size - 1]);
-		size--;
+		free (tab[i]);
+		i++;
 	}
 	free (tab);
 }

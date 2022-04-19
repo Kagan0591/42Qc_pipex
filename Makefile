@@ -6,9 +6,8 @@
 ###---------------------------# VARIABLES ##---------------------------###
 NAME = pipex
 
-SRCS_FILES 		=	path.c \
-					pipex_mem.c \
-					pipex.c \
+SRCS_FILES 		= pipex.c \
+				pipex_mem.c \
 
 #B_SRCS_FILES	=	\
 

@@ -1,5 +1,16 @@
 {
 	"files.associations": {
-		"PIPEX.C": "c"
+		"PIPEX.C": "c",
+		"__config": "c",
+		"__functional_03": "c",
+		"__functional_base": "c",
+		"array": "c",
+		"bitset": "c",
+		"chrono": "c",
+		"exception": "c",
+		"functional": "c",
+		"iterator": "c",
+		"string_view": "c",
+		"tuple": "c"
 	}
 }
