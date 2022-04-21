@@ -1,5 +1,8 @@
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# define READ_ENDPIPE 0
+# define WRITE_ENDPIPE 1
 # include <unistd.h>
 # include <stdlib.h>
 # include <errno.h>
