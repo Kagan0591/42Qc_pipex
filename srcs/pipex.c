@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/22 14:26:18 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:40:54 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int	main(int argc, char **argv, char **envp)
 		perror("Input file not found");
 		return (1);
 	}
-	filesfd[1] = open(argv[(argc - 1)], O_WRONLY);
-	if (filesfd[1] == -1)
-		filesfd[1] = open(argv[(argc - 1)], O_CREAT, S_IWUSR | S_IWGRP | S_IWOTH);
+	filesfd[1] = open(argv[(argc - 1)], O_WRONLY | O_CREAT, S_IWUSR | S_IWGRP | S_IWOTH);
 	i = 0;
 	j = 1;
 	while (i < (argc - 3)) //|| fork_pid == original_pid)
@@ -106,9 +104,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			close(pipefd[WRITE_ENDPIPE]);
 			if (i == 0) // Premier iteration le input doit etre rediriger vers le fichier intest ouvert plustot
-				dup2(pipefd[READ_ENDPIPE], filesfd[0]);
+				dup2(filesfd[0], pipefd[READ_ENDPIPE]);
 			else
-				dup2(pipefd[READ_ENDPIPE], 0);
+				dup2(0, pipefd[READ_ENDPIPE]);
 		}
 		if (fork_pid == 0) //Child process
 		{
