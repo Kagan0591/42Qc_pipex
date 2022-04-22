@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/22 09:39:58 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:26:18 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ int	main(int argc, char **argv, char **envp)
 	// If outfile not exist, open with O_CREAT flag
 	filesfd[0] = open(argv[1], O_WRONLY);
 	if (filesfd[0] == -1)
-		return (ft_printf("Input file not found\n")); // use perror "Input file not found"
+	{
+		perror("Input file not found");
+		return (1);
+	}
 	filesfd[1] = open(argv[(argc - 1)], O_WRONLY);
 	if (filesfd[1] == -1)
 		filesfd[1] = open(argv[(argc - 1)], O_CREAT, S_IWUSR | S_IWGRP | S_IWOTH);
@@ -101,33 +104,58 @@ int	main(int argc, char **argv, char **envp)
 		fork_pid = fork();
 		if (fork_pid != 0) //Parent process
 		{
-			close(WRITE_ENDPIPE);
+			close(pipefd[WRITE_ENDPIPE]);
 			if (i == 0) // Premier iteration le input doit etre rediriger vers le fichier intest ouvert plustot
 				dup2(pipefd[READ_ENDPIPE], filesfd[0]);
 			else
-				dup2(pipefd[READ_ENDPIPE], 1);
+				dup2(pipefd[READ_ENDPIPE], 0);
 		}
 		if (fork_pid == 0) //Child process
 		{
-			break;
+			ft_printf("TEST\n");
+			close(pipefd[READ_ENDPIPE]);
+			if (j == (argc - 1)) // Derniere iteration le WRITE_ENDPIPE doit etre rediriger vers le fichier outtest ouvert plustot
+			{
+				dup2(filesfd[1], pipefd[WRITE_ENDPIPE]);
+			}
+			else
+			{
+				dup2(1, pipefd[WRITE_ENDPIPE]);
+				ft_printf("TEST2\n");
+			}
+			if (execution(argv[j], envp) == -1)
+			{
+				perror("Exec probleme\n");
+				return (2);
+				break;
+			}
 		}
 		i++;
 		waitpid(fork_pid, &waitpid_status, 0);
+		ft_printf("TESTPARENT\n");
 	}
-	while (j < (argc))
-	{
-		if (fork_pid == 0)
-		{
-			close(READ_ENDPIPE);
-			if (i == (argc - 1)) // Derniere iteration le WRITE_ENDPIPE doit etre rediriger vers le fichier outtest ouvert plustot
-				dup2(pipefd[WRITE_ENDPIPE], filesfd[1]);
-			else
-				dup2(pipefd[WRITE_ENDPIPE], 1);
-
-			if (execution(argv[j], envp) == -1)
-				return (ft_printf("Exec probleme\n"));
-		}
-		j++;
-	}
+	// while (j < (argc))
+	// {
+	// 	if (fork_pid == 0)
+	// 	{
+	// 		ft_printf("TEST\n");
+	// 		close(pipefd[READ_ENDPIPE]);
+	// 		if (j == (argc - 1)) // Derniere iteration le WRITE_ENDPIPE doit etre rediriger vers le fichier outtest ouvert plustot
+	// 		{
+	// 			dup2(pipefd[WRITE_ENDPIPE], filesfd[1]);
+	// 		}
+	// 		else
+	// 		{
+	// 			dup2(pipefd[WRITE_ENDPIPE], 1);
+	// 			ft_printf("TEST2\n");
+	// 		}
+	// 		if (execution(argv[j], envp) == -1)
+	// 		{
+	// 			perror("Exec probleme\n");
+	// 			return (2);
+	// 		}
+	// 	}
+	// 	j++;
+	// }
 	return (0);
 }
