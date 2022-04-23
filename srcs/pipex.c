@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/22 09:39:58 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/22 23:33:02 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	main(int argc, char **argv, char **envp)
 	int	j;
 	int	fork_pid;
 	int	waitpid_status;
-	int	pipefd[2]; //fd[0] = read  //fd[1] = write
-	int	filesfd[2]; //fd[0] = infile  //fd[1] = outfile
+	int	pipefd[2]; //fd[0] = read | fd[1] = write
+	int	filesfd[2]; //fd[0] = infile | fd[1] = outfile
 
 	// If outfile not exist, open with O_CREAT flag
 	filesfd[0] = open(argv[1], O_WRONLY);
@@ -101,11 +101,12 @@ int	main(int argc, char **argv, char **envp)
 		fork_pid = fork();
 		if (fork_pid != 0) //Parent process
 		{
-			close(WRITE_ENDPIPE);
+			ft_printf("%d\n", pipefd[WRITE_ENDPIPE]);
+			close(pipefd[WRITE_ENDPIPE]);
 			if (i == 0) // Premier iteration le input doit etre rediriger vers le fichier intest ouvert plustot
-				dup2(pipefd[READ_ENDPIPE], filesfd[0]);
+				dup2(filesfd[0], pipefd[READ_ENDPIPE]);
 			else
-				dup2(pipefd[READ_ENDPIPE], 1);
+				dup2(STDIN_FILENO, pipefd[READ_ENDPIPE]);
 		}
 		if (fork_pid == 0) //Child process
 		{
@@ -118,11 +119,12 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (fork_pid == 0)
 		{
-			close(READ_ENDPIPE);
+			ft_printf("%d\n", pipefd[READ_ENDPIPE]);
+			close(pipefd[READ_ENDPIPE]);
 			if (i == (argc - 1)) // Derniere iteration le WRITE_ENDPIPE doit etre rediriger vers le fichier outtest ouvert plustot
 				dup2(pipefd[WRITE_ENDPIPE], filesfd[1]);
 			else
-				dup2(pipefd[WRITE_ENDPIPE], 1);
+				dup2(pipefd[WRITE_ENDPIPE], STDOUT_FILENO);
 
 			if (execution(argv[j], envp) == -1)
 				return (ft_printf("Exec probleme\n"));
