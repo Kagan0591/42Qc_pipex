@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/25 09:25:49 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/25 09:28:11 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static int	execution(char *p_argv, char **p_envp)
 	// ft_printf("absolute path = %s \n", absolute_path);
 	if (execve(absolute_path, cmd, p_envp) == -1)
 	{
+		// ft_printf("TEST\n");
 		clear_char_tab(cmd);
 		free(absolute_path);
 		return (-1);
