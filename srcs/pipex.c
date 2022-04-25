@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/25 09:28:11 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:52:24 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,49 +87,51 @@ int	main(int argc, char **argv, char **envp)
 	int	filesfd[2]; //fd[0] = infile | fd[1] = outfile
 
 	// If outfile not exist, open with O_CREAT flag
-	filesfd[0] = open(argv[1], O_WRONLY);
+	filesfd[0] = open(argv[1], O_RDONLY);
 	if (filesfd[0] == -1)
 	{
 		perror("Input file not found");
 		return (1);
 	}
-	filesfd[1] = open(argv[(argc - 1)], O_WRONLY | O_CREAT, S_IWUSR | S_IWGRP | S_IWOTH);
+	filesfd[1] = open(argv[(argc - 1)], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+	ft_printf("FD0 = %d, FD1 = %d, \n", filesfd[0], filesfd[1]);
 	i = 0;
 	j = 1;
+
 	while (i < (argc - 3)) //|| fork_pid == original_pid)
 	{
 		j = j + 1; //pour aligner les childs process sur les cmds en argument. Le premier process child aura la variable j = 2 pusiqu elle commence a 1 et obient 1 de plus au passage dans la boucle juste avant le fork.
 		pipe(pipefd);
+		if (i == 0) // Premier iteration le input doit etre rediriger vers le fichier intest ouvert plustot
+			dup2(filesfd[0], 0);
+		else
+			dup2(pipefd[READ_ENDPIPE], 0);
 		fork_pid = fork();
-		if (fork_pid != 0) //Parent process
-		{
-			close(pipefd[WRITE_ENDPIPE]);
-			if (i == 0) // Premier iteration le input doit etre rediriger vers le fichier intest ouvert plustot
-				dup2(filesfd[0], pipefd[READ_ENDPIPE]);
-			else
-				dup2(0, pipefd[READ_ENDPIPE]);
-		}
 		if (fork_pid == 0) //Child process
 		{
 			close(pipefd[READ_ENDPIPE]);
-			if (j == (argc - 1)) // Derniere iteration le WRITE_ENDPIPE doit etre rediriger vers le fichier outtest ouvert plustot
+			if (j == (argc - 2)) // Derniere iteration le WRITE_ENDPIPE doit etre rediriger vers le fichier outtest ouvert plustot
 			{
-				dup2(filesfd[1], pipefd[WRITE_ENDPIPE]);
+				dup2(filesfd[1], 1);
+				close(pipefd[WRITE_ENDPIPE]);
 			}
 			else
 			{
-				dup2(1, pipefd[WRITE_ENDPIPE]);
+				dup2(pipefd[WRITE_ENDPIPE], 1);
 			}
+			//perror("TEST\n");
 			if (execution(argv[j], envp) == -1)
 			{
 				perror("Exec probleme\n");
-				return (2);
-				break;
+				exit(2);
 			}
+			//perror("TEST\n");
 		}
 		i++;
 		waitpid(fork_pid, &waitpid_status, 0);
 	}
+	close(filesfd[0]);
+	close(filesfd[1]);
 	// while (j < (argc))
 	// {
 	// 	if (fork_pid == 0)
