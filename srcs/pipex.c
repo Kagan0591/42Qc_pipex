@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/22 23:38:21 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/25 09:25:49 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	execution(char *p_argv, char **p_envp)
 
 	cmd = ft_split(p_argv, ' ');
 	absolute_path = recup_the_bin_path(cmd[0], p_envp);
-	ft_printf("absolute path = %s \n", absolute_path);
+	// ft_printf("absolute path = %s \n", absolute_path);
 	if (execve(absolute_path, cmd, p_envp) == -1)
 	{
 		clear_char_tab(cmd);
@@ -97,12 +97,11 @@ int	main(int argc, char **argv, char **envp)
 	j = 1;
 	while (i < (argc - 3)) //|| fork_pid == original_pid)
 	{
-		j = j + 1; //pour aligner les processus sur les cmds en argument. Le premier process child aura la variable j = 2 pusiqu elle commence a 1 et obient 1 de plus au passage dans la boucle juste avant le fork.
+		j = j + 1; //pour aligner les childs process sur les cmds en argument. Le premier process child aura la variable j = 2 pusiqu elle commence a 1 et obient 1 de plus au passage dans la boucle juste avant le fork.
 		pipe(pipefd);
 		fork_pid = fork();
 		if (fork_pid != 0) //Parent process
 		{
-			ft_printf("%d\n", pipefd[WRITE_ENDPIPE]);
 			close(pipefd[WRITE_ENDPIPE]);
 			if (i == 0) // Premier iteration le input doit etre rediriger vers le fichier intest ouvert plustot
 				dup2(filesfd[0], pipefd[READ_ENDPIPE]);
@@ -111,7 +110,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (fork_pid == 0) //Child process
 		{
-			ft_printf("TEST\n");
 			close(pipefd[READ_ENDPIPE]);
 			if (j == (argc - 1)) // Derniere iteration le WRITE_ENDPIPE doit etre rediriger vers le fichier outtest ouvert plustot
 			{
@@ -120,7 +118,6 @@ int	main(int argc, char **argv, char **envp)
 			else
 			{
 				dup2(1, pipefd[WRITE_ENDPIPE]);
-				ft_printf("TEST2\n");
 			}
 			if (execution(argv[j], envp) == -1)
 			{
@@ -131,7 +128,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		i++;
 		waitpid(fork_pid, &waitpid_status, 0);
-		ft_printf("TESTPARENT\n");
 	}
 	// while (j < (argc))
 	// {
