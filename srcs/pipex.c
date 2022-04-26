@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/26 11:51:20 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/26 12:03:28 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static int	execution(char *p_argv, char **p_envp)
 int	main(int argc, char **argv, char **envp)
 {
 	int	i;
-	int	j;
 	int	fork_pid;
 	int	waitpid_status;
 	int	pipefd[2]; //fd[0] = read | fd[1] = write
@@ -90,15 +89,9 @@ int	main(int argc, char **argv, char **envp)
 	filesfd[1] = open(argv[(argc - 1)], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU | S_IRWXG | S_IRWXO);
 	ft_printf("FD0 = %d, FD1 = %d, \n", filesfd[0], filesfd[1]);
 	if (filesfd[0] == -1)
-	{
 		i = 3;
-		j = 3;
-	}
 	else
-	{
 		i = 2;
-		j = 2;
-	}
 	pipe(pipefd);
 	while (i < (argc - 1))
 	{
