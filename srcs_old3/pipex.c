@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/26 10:13:22 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/25 21:33:12 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static int	execution(char *p_argv, char **p_envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+	(void) envp;
 	int	i;
 	int	j;
 	int	fork_pid;
@@ -91,10 +92,9 @@ int	main(int argc, char **argv, char **envp)
 	ft_printf("FD0 = %d, FD1 = %d, \n", filesfd[0], filesfd[1]);
 	i = 0;
 	if (filesfd[0] == -1)
-		j = 3;
-	else
 		j = 2;
-	pipe(pipefd);
+	else
+		j = 1;
 	while (i < (argc - 3))
 	{
 		j = j + 1; //pour aligner les childs process sur les cmds en argument. Le premier process child aura la variable j = 2 pusiqu elle commence a 1 et obient 1 de plus au passage dans la boucle juste avant le fork.
@@ -104,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 		{
+			pipe(pipefd);
 			dup2(pipefd[READ_ENDPIPE], 0);
 		}
 		fork_pid = fork();
@@ -114,6 +115,7 @@ int	main(int argc, char **argv, char **envp)
 				perror("TEST 1\n");
 				dup2(filesfd[1], 1);
 				close(pipefd[WRITE_ENDPIPE]);
+				close(pipefd[READ_ENDPIPE]);
 			}
 			else
 			{
@@ -128,9 +130,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		i++;
 		waitpid(fork_pid, &waitpid_status, 0);
-		perror("WHILE LOOP PASS : ");
 	}
-	close(pipefd[READ_ENDPIPE]);
 	close(filesfd[0]);
 	close(filesfd[1]);
 	return (0);
