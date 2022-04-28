@@ -8,6 +8,11 @@ NAME = pipex
 
 SRCS_FILES 		= pipex.c \
 				pipex_mem.c \
+				pipex_exec.c \
+				pipex_files_handling.c \
+				pipex_dll_addnodes.c \
+				pipex_dll_del.c \
+				pipex_dll_tools1.c \
 
 #B_SRCS_FILES	=	\
 

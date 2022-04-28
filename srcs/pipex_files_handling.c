@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_mem.c                                        :+:      :+:    :+:   */
+/*   pipex_files_handling.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 11:01:50 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/27 14:02:46 by tchalifo         ###   ########.fr       */
+/*   Created: 2022/04/27 09:51:03 by tchalifo          #+#    #+#             */
+/*   Updated: 2022/04/27 12:47:12 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/pipex.h"
 
-t_data	*mem_init(void)
+int	open_files(t_data *p_fd_data, int argc, char **p_argv)
 {
-	t_data	*prg_data;
-
-	prg_data = malloc(sizeof(t_data));
-	if (!prg_data)
+	if (access(p_argv[1], R_OK) == -1)
 	{
-		dprintf(2, "Memory allocation probleme. Exit program, Bye!\n");
-		exit (1);
+		dprintf(2, "Permission denied: %s\n", p_argv[1]);
+		exit(1);
 	}
-	prg_data->cmds_list = NULL;
-	prg_data->mainloop_i = 0;
-	return (prg_data);
-}
-
-void	clear_char_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
+	p_fd_data->filesfd[0] = open(p_argv[1], O_RDONLY);
+	if (p_fd_data->filesfd[0] == -1)
 	{
-		free (tab[i]);
-		i++;
+		dprintf(2, "No such file or directory: %s\n", p_argv[1]);
+		return (2);
 	}
-	free (tab);
+	p_fd_data->filesfd[1] = open(p_argv[(argc - 1)], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU | S_IRWXG | S_IRWXO);
+	return (0);
 }

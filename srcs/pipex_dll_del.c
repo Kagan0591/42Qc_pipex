@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doubly_linked_list.h"
+#include "include/pipex.h"
 
-void	ft_dllst_delone(t_dlinklst *p_lst)
+void	ft_dllst_delone(t_cmdinfos *p_lst)
 {
 	if (p_lst)
 	{
@@ -22,9 +22,9 @@ void	ft_dllst_delone(t_dlinklst *p_lst)
 	}
 }
 
-void	ft_dllst_clear(t_dlinklst *p_lst)
+void	ft_dllst_clear(t_cmdinfos *p_lst)
 {
-	t_dlinklst	*tmp;
+	t_cmdinfos	*tmp;
 
 	tmp = NULL;
 	while (p_lst != NULL)
@@ -35,12 +35,13 @@ void	ft_dllst_clear(t_dlinklst *p_lst)
 	}
 }
 
-void	ft_dllst_secure_del(t_dlinklst *p_lst)
+void	ft_dllst_secure_del(t_cmdinfos *p_lst)
 {
+	(void) p_lst;
 	/*data to delete*/
 }
 
-t_bool	ft_dllst_isempty(t_dlinklst *p_lst)
+t_bool	ft_dllst_isempty(t_cmdinfos *p_lst)
 {
 	if (p_lst == NULL)
 		return (true);

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doubly_linked_list.h"
+#include "include/pipex.h"
 
-int	ft_dllst_size(t_dlinklst *p_lst)
+int	ft_dllst_size(t_cmdinfos *p_lst)
 {
 	int	count;
 
@@ -25,7 +25,7 @@ int	ft_dllst_size(t_dlinklst *p_lst)
 	return (count);
 }
 
-void	ft_dllst_print_single_node(t_dlinklst *p_lst)
+void	ft_dllst_print_single_node(t_cmdinfos *p_lst)
 {
 	if (p_lst != NULL)
 	{
@@ -34,7 +34,7 @@ void	ft_dllst_print_single_node(t_dlinklst *p_lst)
 	}
 }
 
-void	ft_dllst_print_lst(t_dlinklst *p_lst)
+void	ft_dllst_print_lst(t_cmdinfos *p_lst)
 {
 	while (p_lst != NULL)
 	{
@@ -43,14 +43,14 @@ void	ft_dllst_print_lst(t_dlinklst *p_lst)
 	}
 }
 
-t_dlinklst	*ft_dllist_go_to_left(t_dlinklst *p_lst)
+t_cmdinfos	*ft_dllist_go_to_left(t_cmdinfos *p_lst)
 {
 	while (p_lst->previous != NULL)
 		p_lst = p_lst->previous;
 	return (p_lst);
 }
 
-t_dlinklst	*ft_dllist_go_to_right(t_dlinklst *p_lst)
+t_cmdinfos	*ft_dllist_go_to_right(t_cmdinfos *p_lst)
 {
 	while (p_lst->next != NULL)
 		p_lst = p_lst->next;
