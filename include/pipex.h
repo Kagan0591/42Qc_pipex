@@ -27,7 +27,7 @@ typedef struct t_data
 	int			filesfd[2]; //fd[0] = infile | fd[1] = outfile
 	int			pipefd[2]; //fd[0] = read | fd[1] = write
 	int			mainloop_i;
-
+	int			*child_pid;
 	t_cmdinfos	*cmds_list;
 }t_data;
 
