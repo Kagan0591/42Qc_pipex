@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/29 11:06:15 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/29 16:38:36 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		pipe(prg_data->pipefd);
 		fork_pid = fork();
-		setupio(prg_data, fork_pid, argc);
 		if (fork_pid != 0) //PARENT PROCESS
 			wait(NULL);
 		if (fork_pid == 0) //CHILD PROCESS
 		{
+			setupio(prg_data, fork_pid, argc);
 			dprintf(2, "argv passed to function ft_execve = %s\n", argv[prg_data->mainloop_i]);
 			if (ft_execve(argv[prg_data->mainloop_i], envp) == -1)
 				exit(3);

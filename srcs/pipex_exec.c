@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/29 11:18:40 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/29 16:40:54 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,44 +83,40 @@ int	ft_execve(char *p_argv, char **envp)
 //#2
 void	setupio(t_data *prg_data, int fork_pid, int argc)
 {
+	(void) fork_pid;
 /*
 	1. si premiere iteration, dup2 le stdin 0 avec le filesfd[0]
 	else, dup2 le stdin 0 avec le pipefd[0] READEND.
 	2. si derniere iteration, dup2 le stdout 1 avec le filesfd[1]
 	else, dup2 le stdout 1 avec le pipefd[1] WRITEEND.
 */
-	if (fork_pid == 0)
+	if (prg_data->mainloop_i == 2) // Premiere execution
 	{
-		if (prg_data->mainloop_i == argc - 2) // Derniere execution
-		{
-			dprintf(2, "Derniere execution TEST WRITE\n");
-			dup2(prg_data->filesfd[1], 1);
-			close(prg_data->filesfd[1]);
-		}
-		else
-		{
-			dprintf(2, "Les premieres executions TEST WRITE\n");
-			close(prg_data->pipefd[READ_ENDPIPE]);
-			dup2(prg_data->pipefd[WRITE_ENDPIPE], 1);
-			close(prg_data->pipefd[WRITE_ENDPIPE]);
-		}
+		dprintf(2, "La premiere execution TEST READ\n");
+		dup2(prg_data->filesfd[0], 0);
+		close(prg_data->filesfd[0]);
 	}
 	else
 	{
-		if (prg_data->mainloop_i == 2) // Premiere execution
-		{
-			dprintf(2, "La premiere execution TEST READ\n");
-			dup2(prg_data->filesfd[0], 0);
-			close(prg_data->filesfd[0]);
-		}
-		else
-		{
-			dprintf(2, "Les autres execution TEST READ\n");
-			close(prg_data->pipefd[WRITE_ENDPIPE]);
-			dup2(prg_data->pipefd[READ_ENDPIPE], 0);
-			close(prg_data->pipefd[READ_ENDPIPE]);
-		}
+		dprintf(2, "Les autres execution TEST READ\n");
+		close(prg_data->pipefd[WRITE_ENDPIPE]);
+		dup2(prg_data->pipefd[READ_ENDPIPE], 0);
+		close(prg_data->pipefd[READ_ENDPIPE]);
 	}
+	if (prg_data->mainloop_i == argc - 2) // Derniere execution
+	{
+		dprintf(2, "Derniere execution TEST WRITE\n");
+		dup2(prg_data->filesfd[1], 1);
+		close(prg_data->filesfd[1]);
+	}
+	else
+	{
+		dprintf(2, "Les premieres executions TEST WRITE\n");
+		close(prg_data->pipefd[READ_ENDPIPE]);
+		dup2(prg_data->pipefd[WRITE_ENDPIPE], 1);
+		close(prg_data->pipefd[WRITE_ENDPIPE]);
+	}
+
 }
 
 
