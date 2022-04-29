@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 09:51:03 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/28 16:36:51 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/29 11:56:49 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	open_files(t_data *fd_data, int argc, char **argv)
 {
+	dprintf(2, "GNL fd3 = %s\n", ft_get_next_line(3));
 	if (access(argv[1], R_OK) == -1)
 	{
 		dprintf(2, "A probleme occured when opening the file: %s\n", argv[1]);
@@ -21,8 +22,8 @@ int	open_files(t_data *fd_data, int argc, char **argv)
 	}
 	else
 	{
-		dprintf(2, "open TEST\n");
-		fd_data->filesfd[0] = open(argv[1], O_RDONLY);
+		dprintf(2, "open infile TEST\n");
+		fd_data->filesfd[0] = open(argv[1], O_RDONLY, O_WRONLY);
 		dprintf(2, "%d\n", fd_data->filesfd[0]);
 	}
 	if (access(argv[argc - 1], R_OK | W_OK) == -1 && errno != ENOENT)
