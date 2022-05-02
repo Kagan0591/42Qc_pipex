@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/29 16:40:54 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/30 19:59:05 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_execve(char *p_argv, char **envp)
 	absolute_path = recup_the_bin_path(cmd[0], envp);
 	dprintf(2, "absolute path = %s\n", absolute_path);
 	int i = 0;
-	while ((size_t)i < ft_strlen(*cmd))
+	while ((size_t)i < ft_strlen((char*)cmd))
 	{
 		dprintf(2, "cmd tab into ft_execve = %s\n", cmd[i]);
 		i++;

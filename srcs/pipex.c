@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/29 16:38:36 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/30 20:02:07 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv, char **envp)
 		prg_data->mainloop_i = 2;
 	while (prg_data->mainloop_i <= (argc - 2)) // -1 pour l'align tab et -1 pour skip de dernier fichier outfile
 	{
-		pipe(prg_data->pipefd);
 		fork_pid = fork();
 		if (fork_pid != 0) //PARENT PROCESS
 			wait(NULL);
@@ -41,6 +40,8 @@ int	main(int argc, char **argv, char **envp)
 			if (ft_execve(argv[prg_data->mainloop_i], envp) == -1)
 				exit(3);
 		}
+		if (prg_data->mainloop_i < (argc - 2))
+			pipe(prg_data->pipefd);
 		prg_data->mainloop_i++;
 	}
 	return (0);
