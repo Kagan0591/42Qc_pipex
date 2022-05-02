@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/29 16:40:54 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/02 09:33:48 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	setupio(t_data *prg_data, int fork_pid, int argc)
 	else
 	{
 		dprintf(2, "Les autres execution TEST READ\n");
-		close(prg_data->pipefd[WRITE_ENDPIPE]);
+		//close(prg_data->pipefd[WRITE_ENDPIPE]);
 		dup2(prg_data->pipefd[READ_ENDPIPE], 0);
 		close(prg_data->pipefd[READ_ENDPIPE]);
 	}
@@ -112,7 +112,7 @@ void	setupio(t_data *prg_data, int fork_pid, int argc)
 	else
 	{
 		dprintf(2, "Les premieres executions TEST WRITE\n");
-		close(prg_data->pipefd[READ_ENDPIPE]);
+		//close(prg_data->pipefd[READ_ENDPIPE]);
 		dup2(prg_data->pipefd[WRITE_ENDPIPE], 1);
 		close(prg_data->pipefd[WRITE_ENDPIPE]);
 	}

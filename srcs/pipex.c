@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/29 16:38:36 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/02 09:31:40 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ int	main(int argc, char **argv, char **envp)
 		prg_data->mainloop_i = argc - 2; //Pour commencer avec le dernier cmd en cas d absence de fichier input
 	else
 		prg_data->mainloop_i = 2;
+	pipe(prg_data->pipefd);
 	while (prg_data->mainloop_i <= (argc - 2)) // -1 pour l'align tab et -1 pour skip de dernier fichier outfile
 	{
-		pipe(prg_data->pipefd);
 		fork_pid = fork();
-		if (fork_pid != 0) //PARENT PROCESS
-			wait(NULL);
 		if (fork_pid == 0) //CHILD PROCESS
 		{
 			setupio(prg_data, fork_pid, argc);
@@ -41,44 +39,9 @@ int	main(int argc, char **argv, char **envp)
 			if (ft_execve(argv[prg_data->mainloop_i], envp) == -1)
 				exit(3);
 		}
+		else //PARENT PROCESS
+			wait(NULL);
 		prg_data->mainloop_i++;
 	}
 	return (0);
 }
-
-
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_data	*prg_data;
-// 	int	fork_pid;
-
-// 	prg_data = mem_init();
-// 	if (open_files(prg_data, argc, argv) == 2)
-// 		prg_data->mainloop_i = argc - 2; //Pour commencer avec le dernier cmd en cas d absence de fichier input
-// 	else
-// 		prg_data->mainloop_i = 2;
-// 	while (prg_data->mainloop_i <= (argc - 2)) // -1 pour l'align tab et -1 pour skip de dernier fichier outfile
-// 	{
-// 		pipe(prg_data->pipefd);
-// 		fork_pid = fork();
-// 		if (fork_pid != 0) //PARENT PROCESS
-// 		{
-// 			//setupio(prg_data, fork_pid, argc);
-// 			wait(NULL);
-// 		}
-// 		if (fork_pid == 0) //CHILD PROCESS
-// 		{
-// 			setupio(prg_data, fork_pid, argc);
-// 			dprintf(2, "argv passed to function ft_execve = %s\n", argv[prg_data->mainloop_i]);
-// 			if (ft_execve(argv[prg_data->mainloop_i], envp) == -1)
-// 				exit(3);
-// 		}
-// 		// else
-// 		// 	wait(NULL);
-// 		prg_data->mainloop_i++;
-// 	}
-// 	close(prg_data->filesfd[0]);
-// 	close(prg_data->filesfd[1]);
-// 	return (0);
-// }
