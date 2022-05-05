@@ -35,6 +35,7 @@ t_data	*mem_init(void);
 void	clear_char_tab(char **tab);
 int		open_files(t_data *p_fd_data, int argc, char **p_argv);
 int		ft_execve(char *p_argv, char **p_envp);
-void	setupio(t_data *prg_data, int fork_pid, int argc);
+void	setup_io_child_proc_1(t_data *prog_data, int argc);
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_files_handling.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 09:51:03 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/04 11:58:24 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/04/29 16:16:59 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ int	open_files(t_data *fd_data, int argc, char **argv)
 		return (2); // Returning 2 to the parent function, to skip all the cmd except the last one
 	}
 	else
+	{
+		dprintf(2, "open infile TEST\n");
 		fd_data->filesfd[0] = open(argv[1], O_RDONLY, O_WRONLY);
+		dprintf(2, "%d\n", fd_data->filesfd[0]);
+	}
 	if (access(argv[argc - 1], R_OK | W_OK) == -1 && errno != ENOENT)
 	{
 		dprintf(2, "A probleme occured when opening the file: %s\n", argv[argc - 1]);

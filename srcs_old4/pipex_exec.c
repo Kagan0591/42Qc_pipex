@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/04 12:25:48 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/02 09:37:31 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ int	ft_execve(char *p_argv, char **envp)
 	cmd = ft_split(p_argv, ' ');
 	absolute_path = recup_the_bin_path(cmd[0], envp);
 	dprintf(2, "absolute path = %s\n", absolute_path);
+	int i = 0;
+	while ((size_t)i < ft_strlen((char*)cmd))
+	{
+		dprintf(2, "cmd tab into ft_execve = %s\n", cmd[i]);
+		i++;
+	}
 	if (execve(absolute_path, cmd, envp) == -1)
 	{
 		clear_char_tab(cmd);
@@ -75,8 +81,9 @@ int	ft_execve(char *p_argv, char **envp)
 	return (0);
 }
 //#2
-void	setupio(t_data *prg_data, int argc)
+void	setupio(t_data *prg_data, int fork_pid, int argc)
 {
+	(void) fork_pid;
 /*
 	1. si premiere iteration, dup2 le stdin 0 avec le filesfd[0]
 	else, dup2 le stdin 0 avec le pipefd[0] READEND.
@@ -92,12 +99,10 @@ void	setupio(t_data *prg_data, int argc)
 	else
 	{
 		dprintf(2, "Les autres execution TEST READ\n");
-		close(prg_data->pipefd[WRITE_ENDPIPE]);
+		//close(prg_data->pipefd[WRITE_ENDPIPE]);
 		dup2(prg_data->pipefd[READ_ENDPIPE], 0);
 		close(prg_data->pipefd[READ_ENDPIPE]);
 	}
-
-
 	if (prg_data->mainloop_i == argc - 2) // Derniere execution
 	{
 		dprintf(2, "Derniere execution TEST WRITE\n");
@@ -107,61 +112,14 @@ void	setupio(t_data *prg_data, int argc)
 	else
 	{
 		dprintf(2, "Les premieres executions TEST WRITE\n");
-		close(prg_data->pipefd[READ_ENDPIPE]);
+		//close(prg_data->pipefd[READ_ENDPIPE]);
 		dup2(prg_data->pipefd[WRITE_ENDPIPE], 1);
 		close(prg_data->pipefd[WRITE_ENDPIPE]);
 	}
+
 }
 
 
-void	setup_io_child_proc_1(t_data *prog_data, int argc)
-{
-	//input
-	if (prog_data->mainloop_i == 2) // Premiere execution
-	{
-		dprintf(2, "La premiere execution TEST READ\n");
-		dup2(prog_data->filesfd[0], 0);
-		close(prog_data->filesfd[0]);
-	}
-	else
-	{
-		dprintf(2, "Les autres execution TEST READ\n");
-		close(prog_data->pipefd[WRITE_ENDPIPE]);
-		dup2(prog_data->pipefd[READ_ENDPIPE], 0);
-		close(prog_data->pipefd[READ_ENDPIPE]);
-	}
-	//output
-	if (prog_data->mainloop_i == argc - 2) // Derniere execution
-	{
-		dprintf(2, "Derniere execution TEST WRITE\n");
-		dup2(prog_data->filesfd[1], 1);
-		close(prog_data->filesfd[1]);
-	}
-	else
-	{
-		dprintf(2, "Les premieres executions TEST WRITE\n");
-		close(prog_data->pipefd[READ_ENDPIPE]);
-		dup2(prog_data->pipefd[WRITE_ENDPIPE], 1);
-		close(prog_data->pipefd[WRITE_ENDPIPE]);
-	}
-}
-
-void	setup_io_child_proc_2(t_data *prog_data, int argc)
-{
-	if (prog_data->mainloop_i == argc - 2) // Derniere execution
-	{
-		dprintf(2, "Derniere execution TEST WRITE\n");
-		dup2(prog_data->filesfd[1], 1);
-		close(prog_data->filesfd[1]);
-	}
-	else
-	{
-		dprintf(2, "Les premieres executions TEST WRITE\n");
-		close(prog_data->pipefd[READ_ENDPIPE]);
-		dup2(prog_data->pipefd[WRITE_ENDPIPE], 1);
-		close(prog_data->pipefd[WRITE_ENDPIPE]);
-	}
-}
 
 //#1
 // void	setupio(t_data *prg_data, int fork_pid, int argc)
