@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/04 12:26:12 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/05 15:56:23 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,24 @@ int	main(int argc, char **argv, char **envp)
 				{
 					waitpid(fork_pid, NULL, 0);
 					prg_data->mainloop_i++;
-					setup_io_child_proc_1(prg_data, argc);
-					dprintf(2, "argv passed to function ft_execve child 2 = %s\n", argv[prg_data->mainloop_i]);
+					setup_io(prg_data, argc);
+					//dprintf(2, "argv passed to function ft_execve child 2 = %s\n", argv[prg_data->mainloop_i]);
 					if (ft_execve(argv[prg_data->mainloop_i], envp) == -1)
 						exit(3);
 				}
 			}
 			else//Child fork 1
 			{
-				setup_io_child_proc_1(prg_data, argc);
-				dprintf(2, "argv passed to function ft_execve child 1 = %s\n", argv[prg_data->mainloop_i]);
+				setup_io(prg_data, argc);
+				//dprintf(2, "argv passed to function ft_execve child 1 = %s\n", argv[prg_data->mainloop_i]);
 				if (ft_execve(argv[prg_data->mainloop_i], envp) == -1)
 					exit(3);
 			}
 		}
-		// else if (prg_data->mainloop_i > 2)
-		// {
-			//the pipe call need to be between the to process, first is reading the last incrementation
-			//pipe and second writing for the next incrementation of the loop
-		// }
 		prg_data->mainloop_i++;
 	}
+	close(prg_data->pipefd[0]);
+	close(prg_data->pipefd[1]);
+
 	return (0);
 }

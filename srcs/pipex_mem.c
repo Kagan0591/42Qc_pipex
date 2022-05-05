@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_mem.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:01:50 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/04/27 14:02:46 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/05 11:26:47 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_data	*mem_init(void)
 	prg_data = malloc(sizeof(t_data));
 	if (!prg_data)
 	{
-		dprintf(2, "Memory allocation probleme. Exit program, Bye!\n");
+		//dprintf(2, "Memory allocation probleme. Exit program, Bye!\n");
 		exit (1);
 	}
 	prg_data->cmds_list = NULL;
