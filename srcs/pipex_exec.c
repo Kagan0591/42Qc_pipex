@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/05 15:57:55 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:09:39 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*path_env_var_to_str(char **p_envp)
 	return (NULL);
 }
 
-char	*recup_the_bin_path(char *bin_name, char **p_envp)
+static char	*recup_the_bin_path(char *bin_name, char **p_envp)
 {
 	char	**splitted_path;
 	char	*trimmed_path;
@@ -57,53 +57,55 @@ char	*recup_the_bin_path(char *bin_name, char **p_envp)
 	return (NULL);
 }
 
-int	ft_execve(char *p_argv, char **envp)
+int	cmd_parsing(t_cmdinfos_data *exec_data, char *p_argv, char **envp)
 {
-	char	**cmd;
-	char	*absolute_path;
+	exec_data->cmd_argument = ft_split(p_argv, ' ');
+	exec_data->absolute_path = recup_the_bin_path(exec_data->cmd_argument[0], envp);
+	return (0);
+}
 
-	cmd = ft_split(p_argv, ' ');
-	absolute_path = recup_the_bin_path(cmd[0], envp);
-	//dprintf(2, "absolute path = %s\n", absolute_path);
-	if (execve(absolute_path, cmd, envp) == -1)
+int	execution_time(t_cmdinfos_data *exec_data, char **envp)
+{
+
+	if (execve(exec_data->absolute_path, exec_data->cmd_argument, envp) == -1)
 	{
-		clear_char_tab(cmd);
-		free(absolute_path);
-		//dprintf(2, "Execution probleme\n");
+		clear_char_tab(exec_data->cmd_argument);
+		free(exec_data->absolute_path);
+		dprintf(2, "Execution probleme\n");
 		return (-1);
 	}
 	return (0);
 }
 
-void	setup_io(t_data *prog_data, int argc)
-{
-	//input
-	if (prog_data->mainloop_i == 2) // Premiere execution
-	{
-		//dprintf(2, "La premiere execution TEST READ\n");
-		dup2(prog_data->filesfd[0], 0);
-		close(prog_data->filesfd[0]);
-	}
-	else
-	{
-		//dprintf(2, "Les autres execution TEST READ\n");
-		close(prog_data->pipefd[WRITE_ENDPIPE]);
-		dup2(prog_data->pipefd[READ_ENDPIPE], 0);
-		close(prog_data->pipefd[READ_ENDPIPE]);
-	}
-	//output
-	if (prog_data->mainloop_i == argc - 2) // Derniere execution
-	{
-		//dprintf(2, "Derniere execution TEST WRITE\n");
-		dup2(prog_data->filesfd[1], 1);
-		close(prog_data->filesfd[1]);
+// void	setup_io(t_data *prog_data, int argc)
+// {
+// 	//input
+// 	if (prog_data->mainloop_i == 2) // Premiere execution
+// 	{
+// 		//dprintf(2, "La premiere execution TEST READ\n");
+// 		dup2(prog_data->filesfd[0], 0);
+// 		close(prog_data->filesfd[0]);
+// 	}
+// 	else
+// 	{
+// 		//dprintf(2, "Les autres execution TEST READ\n");
+// 		close(prog_data->pipefd[WRITE_ENDPIPE]);
+// 		dup2(prog_data->pipefd[READ_ENDPIPE], 0);
+// 		close(prog_data->pipefd[READ_ENDPIPE]);
+// 	}
+// 	//output
+// 	if (prog_data->mainloop_i == argc - 2) // Derniere execution
+// 	{
+// 		//dprintf(2, "Derniere execution TEST WRITE\n");
+// 		dup2(prog_data->filesfd[1], 1);
+// 		close(prog_data->filesfd[1]);
 
-	}
-	else
-	{
-		//dprintf(2, "Les premieres executions TEST WRITE\n");
-		close(prog_data->pipefd[READ_ENDPIPE]);
-		dup2(prog_data->pipefd[WRITE_ENDPIPE], 1);
-		close(prog_data->pipefd[WRITE_ENDPIPE]);
-	}
-}
+// 	}
+// 	else
+// 	{
+// 		//dprintf(2, "Les premieres executions TEST WRITE\n");
+// 		close(prog_data->pipefd[READ_ENDPIPE]);
+// 		dup2(prog_data->pipefd[WRITE_ENDPIPE], 1);
+// 		close(prog_data->pipefd[WRITE_ENDPIPE]);
+// 	}
+// }
