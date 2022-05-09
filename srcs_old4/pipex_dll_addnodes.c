@@ -19,8 +19,9 @@ t_cmdinfos	*ft_dllst_new(char *absolute_path, char**cmd_argument)
 	new_node = malloc(sizeof(t_cmdinfos));
 	if (new_node)
 	{
-		new_node->absolute_path = absolute_path;
-		new_node->cmd_argument = cmd_argument;
+		new_node->var_data->absolute_path = absolute_path;
+		new_node->var_data->cmd_argument = cmd_argument;
+		new_node->var_data->fork_pid = -1;
 		new_node->next = NULL;
 		new_node->previous = NULL;
 	}
@@ -38,8 +39,9 @@ t_cmdinfos	*ft_dllst_add_back(t_cmdinfos *p_lst, char *absolute_path, char**cmd_
 	{
 		while (p_lst->next != NULL)
 			p_lst = p_lst->next;
-		new_node->absolute_path = absolute_path;
-		new_node->cmd_argument = cmd_argument;
+		new_node->var_data->absolute_path = absolute_path;
+		new_node->var_data->cmd_argument = cmd_argument;
+		new_node->var_data->fork_pid = -1;
 		new_node->next = NULL;
 		new_node->previous = p_lst;
 		p_lst->next = new_node;

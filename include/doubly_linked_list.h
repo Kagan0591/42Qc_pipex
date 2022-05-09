@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:37:56 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/06 13:43:47 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:18:32 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,19 @@ typedef struct t_cmdinfos_data
 {
 	char				*absolute_path;
 	char				**cmd_argument;
-	int					pipefd[2]; //fd[0] = read | fd[1] = write
+	int					fork_pid;
 }t_cmdinfos_data;
 
 typedef struct t_cmdinfos
 {
 	t_cmdinfos_data		*var_data;
+	struct t_cmdinfos	*first_elem;
 	struct t_cmdinfos	*next;
 	struct t_cmdinfos	*previous;
 }t_cmdinfos;
 
-t_cmdinfos	*ft_dllst_new(char *absolute_path_data, char**cmd_argument_data, int *pipe_data);
-t_cmdinfos	*ft_dllst_add_back(t_cmdinfos *p_lst, char *absolute_path, char**cmd_argument, int *pipe_data);
+t_cmdinfos	*ft_dllst_new();
+t_cmdinfos	*ft_dllst_add_back(t_cmdinfos *p_lst);
 void		ft_dllst_delone(t_cmdinfos *p_lst);
 void		ft_dllst_clear(t_cmdinfos *p_lst);
 void		ft_dllst_secure_del(t_cmdinfos *p_lst);
