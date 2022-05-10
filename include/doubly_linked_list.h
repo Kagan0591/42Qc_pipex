@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doubly_linked_list.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:37:56 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/09 16:18:32 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:12:09 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct t_cmdinfos_data
 	char				*absolute_path;
 	char				**cmd_argument;
 	int					fork_pid;
+	int					index;
 }t_cmdinfos_data;
 
 typedef struct t_cmdinfos
