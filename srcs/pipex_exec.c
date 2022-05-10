@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/09 18:14:53 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:48:44 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	setup_input(t_data *prog_data)
 	/* 1. si premiere iteration, dup2 le stdin 0 avec le filesfd[0]
 	else, dup2 le stdin 0 avec le pipefd[0] READEND.
 	*/
-	if (prog_data->mainloop_i == 2) // Premiere execution
+	if (prog_data->cmds_list->previous == NULL)// Premiere execution
+
 	{
 		dprintf(2, "La premiere execution TEST READ\n");
 		dup2(prog_data->filesfd[0], 0);
@@ -83,13 +84,12 @@ void	setup_input(t_data *prog_data)
 		close(prog_data->pipefd[READ_ENDPIPE]);
 	}
 }
-void	setup_output(t_data *prog_data, int argc)
+void	setup_output(t_data *prog_data)
 {
 	/* 2. si derniere iteration, dup2 le stdout 1 avec le filesfd[1]
 	else, dup2 le stdout 1 avec le pipefd[1] WRITEEND.
 	*/
-
-	if (prog_data->mainloop_i == argc - 2) // Derniere execution
+	if (prog_data->cmds_list->next == NULL)// Derniere execution
 	{
 		dprintf(2, "Derniere execution TEST WRITE\n");
 		dup2(prog_data->filesfd[1], 1);
@@ -104,14 +104,27 @@ void	setup_output(t_data *prog_data, int argc)
 	}
 }
 
-int	execution_time(t_cmdinfos_data *exec_data, char **envp)
+int	execution_time(t_data *prog_data, char **envp)
 {
-	if (execve(exec_data->absolute_path, exec_data->cmd_argument, envp) == -1)
+	while (prog_data->cmds_list != NULL)
 	{
-		clear_char_tab(exec_data->cmd_argument);
-		free(exec_data->absolute_path);
-		dprintf(2, "Execution probleme\n");
-		return (-1);
+		setup_input(prog_data);
+		if (pipe(prog_data->pipefd) == -1)
+			perror("Pipe probleme\n");
+		prog_data->cmds_list->var_data->fork_pid = fork();
+		if (prog_data->cmds_list->var_data->fork_pid == 0) // CHILD PROCESS
+		{
+			setup_output(prog_data);
+			if (execve(prog_data->cmds_list->var_data->absolute_path, prog_data->cmds_list->var_data->cmd_argument, envp) == -1)
+			{
+				clear_char_tab(prog_data->cmds_list->var_data->cmd_argument);
+				free(prog_data->cmds_list->var_data->absolute_path);
+				dprintf(2, "Execution probleme\n");
+				return (-1);
+			}
+		}
+		wait(NULL);
+		prog_data->cmds_list = prog_data->cmds_list->next;
 	}
 	return (0);
 }

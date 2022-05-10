@@ -22,6 +22,7 @@ t_cmdinfos	*ft_dllst_new()
 		new_node->var_data = malloc(sizeof(t_cmdinfos_data));
 		new_node->first_elem = new_node;
 		new_node->var_data->fork_pid = -1;
+		new_node->var_data->index = 1;
 	}
 	return (new_node);
 }
@@ -42,7 +43,10 @@ t_cmdinfos	*ft_dllst_add_back(t_cmdinfos *p_lst)
 		new_node->var_data->fork_pid = -1;
 		new_node->previous = p_lst;
 		p_lst->next = new_node;
-		return (new_node);
+		while (p_lst->previous != NULL)
+			p_lst = p_lst->previous;
+		new_node->var_data->index = (ft_dllst_size(p_lst));
+		return (p_lst);
 	}
 	return (NULL);
 }
