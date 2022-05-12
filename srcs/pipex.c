@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/10 16:50:29 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:59:29 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,14 @@ int	main(int argc, char **argv, char **envp)
 	t_data	prog_data;
 
 	prog_data = struct_mem_init(argc);
-	if (open_files(&prog_data, argc, argv) == 2)
+	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	{
+		prog_data.here_doc_flag = 1;
+		open_files(&prog_data, argc, argv);
+		here_doc(&prog_data, argv[2]);
+		prog_data.mainloop_i = 3;
+	}
+	else if (open_files(&prog_data, argc, argv) == 2)
 		prog_data.mainloop_i = argc - 2; //Pour commencer avec le dernier cmd en cas d absence de fichier input
 	else
 		prog_data.mainloop_i = 2;
@@ -38,3 +45,24 @@ int	main(int argc, char **argv, char **envp)
 	execution_time(&prog_data, envp);
 	return (0);
 }
+
+int	here_doc(t_data *prog_data, char *limiter)
+{
+	char *here_doc_tmp = NULL;
+	prog_data->here_doc_tmp_fd = open("here_doc_tmp",\
+	 O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU | S_IRWXG | S_IRWXO);
+
+	here_doc_tmp = get_next_line(0);
+	while (ft_strncmp(here_doc_tmp, limiter, ft_strlen(limiter)) != 0)
+	{
+		if (here_doc_tmp)
+		{
+			write(prog_data->here_doc_tmp_fd, &here_doc_tmp, (ft_strlen(here_doc_tmp) - 1));
+			free(here_doc_tmp);
+		}
+		here_doc_tmp = get_next_line(0);
+	}
+	return (0);
+}
+
+//int	gnl_stdin_read_loop()

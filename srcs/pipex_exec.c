@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/10 16:48:44 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:44:36 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,20 @@ void	setup_input(t_data *prog_data)
 	else, dup2 le stdin 0 avec le pipefd[0] READEND.
 	*/
 	if (prog_data->cmds_list->previous == NULL)// Premiere execution
-
 	{
-		dprintf(2, "La premiere execution TEST READ\n");
-		dup2(prog_data->filesfd[0], 0);
-		close(prog_data->filesfd[0]);
+		if (prog_data->here_doc_flag == 1)
+		{
+			dprintf(2, "La premiere execution apres le here_doc TEST READ\n");
+			dup2(prog_data->here_doc_tmp_fd, 0);
+			close(prog_data->here_doc_tmp_fd);
+			prog_data->here_doc_flag = 0;
+		}
+		else
+		{
+			dprintf(2, "La premiere execution TEST READ\n");
+			dup2(prog_data->filesfd[0], 0);
+			close(prog_data->filesfd[0]);
+		}
 	}
 	else
 	{
@@ -123,7 +132,7 @@ int	execution_time(t_data *prog_data, char **envp)
 				return (-1);
 			}
 		}
-		wait(NULL);
+		waitpid(prog_data->cmds_list->var_data->fork_pid, NULL, WNOHANG);
 		prog_data->cmds_list = prog_data->cmds_list->next;
 	}
 	return (0);
