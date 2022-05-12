@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/11 18:44:36 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:13:11 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	setup_input(t_data *prog_data)
 		{
 			dprintf(2, "La premiere execution apres le here_doc TEST READ\n");
 			dup2(prog_data->here_doc_tmp_fd, 0);
-			close(prog_data->here_doc_tmp_fd);
+			//close(prog_data->here_doc_tmp_fd);
 			prog_data->here_doc_flag = 0;
 		}
 		else
@@ -92,6 +92,7 @@ void	setup_input(t_data *prog_data)
 		dup2(prog_data->pipefd[READ_ENDPIPE], 0);
 		close(prog_data->pipefd[READ_ENDPIPE]);
 	}
+	//exit(1);
 }
 void	setup_output(t_data *prog_data)
 {
@@ -121,6 +122,14 @@ int	execution_time(t_data *prog_data, char **envp)
 		if (pipe(prog_data->pipefd) == -1)
 			perror("Pipe probleme\n");
 		prog_data->cmds_list->var_data->fork_pid = fork();
+		if (prog_data->cmds_list->var_data->fork_pid == -1)
+			dprintf(2, "FROK FAIL@ED\n");
+		if (prog_data->cmds_list->var_data->fork_pid == 0)
+			dprintf(2, "TEST IN CHILD\n");
+		if (prog_data->cmds_list->var_data->fork_pid != 0)
+			dprintf(2, "TEST IN PARENT\n");
+
+		//waitpid(prog_data->cmds_list->var_data->fork_pid, NULL, WNOHANG);
 		if (prog_data->cmds_list->var_data->fork_pid == 0) // CHILD PROCESS
 		{
 			setup_output(prog_data);
@@ -129,10 +138,10 @@ int	execution_time(t_data *prog_data, char **envp)
 				clear_char_tab(prog_data->cmds_list->var_data->cmd_argument);
 				free(prog_data->cmds_list->var_data->absolute_path);
 				dprintf(2, "Execution probleme\n");
-				return (-1);
+				exit(-1);
 			}
 		}
-		waitpid(prog_data->cmds_list->var_data->fork_pid, NULL, WNOHANG);
+		waitpid(0, NULL, 0);
 		prog_data->cmds_list = prog_data->cmds_list->next;
 	}
 	return (0);

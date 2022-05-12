@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/11 18:59:29 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:11:09 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 int	here_doc(t_data *prog_data, char *limiter)
 {
 	char *here_doc_tmp = NULL;
+
 	prog_data->here_doc_tmp_fd = open("here_doc_tmp",\
 	 O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU | S_IRWXG | S_IRWXO);
 
@@ -57,7 +58,7 @@ int	here_doc(t_data *prog_data, char *limiter)
 	{
 		if (here_doc_tmp)
 		{
-			write(prog_data->here_doc_tmp_fd, &here_doc_tmp, (ft_strlen(here_doc_tmp) - 1));
+			write(prog_data->here_doc_tmp_fd, here_doc_tmp, (ft_strlen(here_doc_tmp) - 1));
 			free(here_doc_tmp);
 		}
 		here_doc_tmp = get_next_line(0);
