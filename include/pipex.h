@@ -21,7 +21,7 @@ typedef struct t_data
 	int			pipefd[2]; //fd[0] = read | fd[1] = write
 	int			mainloop_i;
 	int			here_doc_flag; // if == 1, here_doc are present
-	int			here_doc_tmp_fd;
+	int			here_doc_pipefd[2];
 	t_cmdinfos	*cmds_list;
 }t_data;
 

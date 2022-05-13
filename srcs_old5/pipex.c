@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/13 16:48:28 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/13 12:27:39 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,22 @@
  */
 #include "include/pipex.h"
 
-
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	prog_data;
 	int		open_ret;
 
-	open_ret = 0;
 	prog_data = struct_mem_init(argc);
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
-	{
 		prog_data.here_doc_flag = 1;
+	open_ret = open_files(&prog_data, argc, argv);
+	if (open_ret == 2)
+		prog_data.mainloop_i = argc - 2; //Pour commencer avec le dernier cmd en cas d absence de fichier input
+	else if (open_ret == 0 && prog_data.here_doc_flag == 1)
+	{
 		here_doc(&prog_data, argv[2]);
 		prog_data.mainloop_i = 3;
 	}
-	if(open_files(&prog_data, argc, argv) == 2)
-		prog_data.mainloop_i = argc - 2; //Pour commencer avec le dernier cmd en cas d absence de fichier input
 	else
 		prog_data.mainloop_i = 2;
 	while (prog_data.mainloop_i < argc - 1)
@@ -49,29 +48,12 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-int	here_doc(t_data *prog_data, char *limiter)
-{
-	char *here_doc_tmp = NULL;
-
-	pipe(prog_data->here_doc_pipefd);
-	here_doc_tmp = get_next_line(0);
-	while (ft_strncmp(here_doc_tmp, limiter, ft_strlen(limiter)) != 0)
-	{
-		ft_putstr_fd(here_doc_tmp, prog_data->here_doc_pipefd[WRITE_ENDPIPE]);
-		free(here_doc_tmp);
-		here_doc_tmp = get_next_line(0);
-	}
-	return (0);
-}
-
 void	setup_input(t_data *prog_data)
 {
 	if (prog_data->cmds_list->previous == NULL && prog_data->here_doc_flag == 1)
 	{
 		dprintf(2, "La premiere execution apres le here_doc TEST READ\n");
-		close(prog_data->here_doc_pipefd[WRITE_ENDPIPE]);
-		dup2(prog_data->here_doc_pipefd[READ_ENDPIPE], 0);
-		close(prog_data->here_doc_pipefd[READ_ENDPIPE]);
+		dup2(prog_data->here_doc_tmp_fd, 0);
 		//close(prog_data->here_doc_tmp_fd);
 	}
 	else if (prog_data->cmds_list->previous == NULL && prog_data->here_doc_flag == 0)
@@ -103,4 +85,21 @@ void	setup_output(t_data *prog_data)
 		dup2(prog_data->pipefd[WRITE_ENDPIPE], 1);
 		close(prog_data->pipefd[WRITE_ENDPIPE]);
 	}
+}
+
+int	here_doc(t_data *prog_data, char *limiter)
+{
+	char *here_doc_tmp = NULL;
+
+	here_doc_tmp = get_next_line(0);
+	while (ft_strncmp(here_doc_tmp, limiter, ft_strlen(limiter)) != 0)
+	{
+		if (here_doc_tmp)
+		{
+			ft_putstr_fd(here_doc_tmp, prog_data->here_doc_tmp_fd);
+			free(here_doc_tmp);
+		}
+		here_doc_tmp = get_next_line(0);
+	}
+	return (0);
 }
