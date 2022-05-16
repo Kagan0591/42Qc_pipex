@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/13 16:48:28 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/16 07:52:39 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	prog_data;
-	int		open_ret;
 
-	open_ret = 0;
 	prog_data = struct_mem_init(argc);
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
