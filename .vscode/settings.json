@@ -11,6 +11,10 @@
 		"functional": "c",
 		"iterator": "c",
 		"string_view": "c",
-		"tuple": "c"
+		"tuple": "c",
+		"__tuple": "cpp",
+		"ios": "cpp",
+		"string": "cpp",
+		"vector": "cpp"
 	}
 }

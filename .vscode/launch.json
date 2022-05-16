@@ -14,7 +14,7 @@
 			"request": "launch",
 			"name": "Debug_gdb",
 			"program": "${workspaceFolder}/pipex",
-			"args": ["here_doc", "FIN", "cat", "cat", "outfile"],
+			"args": ["cat", "cat", "outfile"],
 		}
 	]
 }

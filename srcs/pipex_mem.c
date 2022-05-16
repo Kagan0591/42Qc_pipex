@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:01:50 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/13 16:44:42 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/16 11:27:19 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ t_data	struct_mem_init()
 
 	prog_data.filesfd[0] = 0;
 	prog_data.filesfd[1] = 0;
+	prog_data.infile_flag = 0;
 	prog_data.pipefd[0] = 0;
 	prog_data.pipefd[1] = 0;
 	prog_data.here_doc_pipefd[0] = 0;
 	prog_data.here_doc_pipefd[1] = 0;
-	prog_data.mainloop_i = 0;
 	prog_data.here_doc_flag = 0;
 	prog_data.cmds_list = NULL;
 	return (prog_data);
