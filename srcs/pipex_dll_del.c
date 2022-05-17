@@ -16,8 +16,9 @@ void	ft_dllst_delone(t_cmdinfos *p_lst)
 {
 	if (p_lst)
 	{
-		ft_dllst_secure_del(p_lst);
-		/*free_tabs*/
+		clear_char_tab(p_lst->var_data->cmd_argument);
+		free(p_lst->var_data->absolute_path);
+		free(p_lst->var_data);
 		free(p_lst);
 	}
 }
@@ -33,12 +34,6 @@ void	ft_dllst_clear(t_cmdinfos *p_lst)
 		ft_dllst_delone(p_lst);
 		p_lst = tmp;
 	}
-}
-
-void	ft_dllst_secure_del(t_cmdinfos *p_lst)
-{
-	(void) p_lst;
-	/*data to delete*/
 }
 
 t_bool	ft_dllst_isempty(t_cmdinfos *p_lst)

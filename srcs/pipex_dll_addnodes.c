@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-t_cmdinfos	*ft_dllst_new()
+t_cmdinfos	*ft_dllst_new(void)
 {
 	t_cmdinfos	*new_node;
 

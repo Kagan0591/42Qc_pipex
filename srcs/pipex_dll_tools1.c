@@ -25,24 +25,6 @@ int	ft_dllst_size(t_cmdinfos *p_lst)
 	return (count);
 }
 
-void	ft_dllst_print_single_node(t_cmdinfos *p_lst)
-{
-	if (p_lst != NULL)
-	{
-		/*data*/
-		ft_putstr("\n");
-	}
-}
-
-void	ft_dllst_print_lst(t_cmdinfos *p_lst)
-{
-	while (p_lst != NULL)
-	{
-		ft_dllst_print_single_node(p_lst);
-		p_lst = p_lst->next;
-	}
-}
-
 t_cmdinfos	*ft_dllist_go_to_left(t_cmdinfos *p_lst)
 {
 	while (p_lst->previous != NULL)

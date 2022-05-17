@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_io.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 10:21:05 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/16 10:54:37 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:11:38 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/pipex.h"
+#include "pipex.h"
 
 void	setup_input(t_data *prog_data)
 {
@@ -24,10 +24,10 @@ void	setup_input(t_data *prog_data)
 			close(prog_data->here_doc_pipefd[READ_ENDPIPE]);
 		}
 		else if (prog_data->infile_flag == 1)
-			dprintf(2, "La premiere execution sans fichier infile TEST READ\n");
+		{
+		}
 		else
 		{
-			dprintf(2, "La premiere execution TEST READ\n");
 			dup2(prog_data->filesfd[0], 0);
 			close(prog_data->filesfd[0]);
 		}
@@ -40,6 +40,7 @@ void	setup_input(t_data *prog_data)
 		close(prog_data->pipefd[READ_ENDPIPE]);
 	}
 }
+
 void	setup_output(t_data *prog_data)
 {
 	if (prog_data->cmds_list->next == NULL)

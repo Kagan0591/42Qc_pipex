@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/13 16:27:31 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/17 14:35:47 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*recup_the_bin_path(char *bin_name, char **p_envp)
 	while (splitted_path[i])
 	{
 		complete_bin_path = ft_strjoin(splitted_path[i], "/");
-		complete_bin_path = ft_strjoin(complete_bin_path, bin_name);
+		complete_bin_path = ft_strjoin_free_s1(complete_bin_path, bin_name);
 		if (access(complete_bin_path, X_OK) != -1)
 		{
 			clear_char_tab(splitted_path);
@@ -52,15 +52,16 @@ static char	*recup_the_bin_path(char *bin_name, char **p_envp)
 		}
 		i++;
 	}
-	free (complete_bin_path);
 	clear_char_tab(splitted_path);
+	free (complete_bin_path);
 	return (NULL);
 }
 
 int	cmd_parsing(t_cmdinfos_data *exec_data, char *p_argv, char **envp)
 {
 	exec_data->cmd_argument = ft_split(p_argv, ' ');
-	exec_data->absolute_path = recup_the_bin_path(exec_data->cmd_argument[0], envp);
+	exec_data->absolute_path = \
+		recup_the_bin_path(exec_data->cmd_argument[0], envp);
 	return (0);
 }
 
@@ -70,31 +71,23 @@ int	execution_time(t_data *prog_data, char **envp)
 	{
 		setup_input(prog_data);
 		if (pipe(prog_data->pipefd) == -1)
-			perror("Pipe probleme\n");
+			perror(NULL);
 		prog_data->cmds_list->var_data->fork_pid = fork();
 		if (prog_data->cmds_list->var_data->fork_pid == -1)
-			dprintf(2, "FROK FAIL@ED\n");
-		// if (prog_data->cmds_list->var_data->fork_pid == 0)
-		// 	dprintf(2, "TEST IN CHILD\n");
-		// if (prog_data->cmds_list->var_data->fork_pid != 0)
-		// 	dprintf(2, "TEST IN PARENT\n");
-		if (prog_data->cmds_list->var_data->fork_pid != 0) // PARENT PROCESS ONLY
-		{
-			waitpid(0, NULL, 0);
-			prog_data->cmds_list = prog_data->cmds_list->next;
-		}
-		else // CHILD PROCESS
+			perror(NULL);
+		else if (prog_data->cmds_list->var_data->fork_pid == 0)
 		{
 			setup_output(prog_data);
-			if (execve(prog_data->cmds_list->var_data->absolute_path, prog_data->cmds_list->var_data->cmd_argument, envp) == -1)
+			if (execve(prog_data->cmds_list->var_data->absolute_path, \
+				prog_data->cmds_list->var_data->cmd_argument, envp) == -1)
 			{
-				clear_char_tab(prog_data->cmds_list->var_data->cmd_argument);
-				free(prog_data->cmds_list->var_data->absolute_path);
-				dprintf(2, "Execution probleme\n");
-				exit(-1);
+				ft_dllst_clear(prog_data->cmds_list);
+				perror(NULL);
+				exit(errno);
 			}
 		}
-		//waitpid(prog_data->cmds_list->var_data->fork_pid, NULL, WNOHANG);
+		waitpid(0, NULL, 0);
+		prog_data->cmds_list = prog_data->cmds_list->next;
 	}
 	return (0);
 }

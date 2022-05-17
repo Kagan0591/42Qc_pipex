@@ -14,7 +14,6 @@ SRCS_FILES 		= pipex.c \
 				pipex_dll_addnodes.c \
 				pipex_dll_del.c \
 				pipex_dll_tools1.c \
-				gnl.c \
 
 #B_SRCS_FILES	=	\
 
@@ -48,8 +47,6 @@ END			= \033[0m
 BOLD		= \033[1m
 ITALIC		= \033[3m
 URL			= \033[4m
-BLINK		= \033[5m
-BLINK2		= \033[6m
 SELECTED	= \033[7m
 
 BLACK		= \033[30m

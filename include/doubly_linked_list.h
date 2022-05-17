@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:37:56 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/09 18:12:09 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/17 13:35:04 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct t_cmdinfos
 	struct t_cmdinfos	*previous;
 }t_cmdinfos;
 
-t_cmdinfos	*ft_dllst_new();
+t_cmdinfos	*ft_dllst_new(void);
 t_cmdinfos	*ft_dllst_add_back(t_cmdinfos *p_lst);
 void		ft_dllst_delone(t_cmdinfos *p_lst);
 void		ft_dllst_clear(t_cmdinfos *p_lst);
