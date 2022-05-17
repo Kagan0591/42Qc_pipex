@@ -32,6 +32,7 @@ typedef struct t_data
 	int			pipefd[2];
 	int			here_doc_flag;
 	int			here_doc_pipefd[2];
+	t_cmdinfos	*first_node_ptr;
 	t_cmdinfos	*cmds_list;
 	int			argc;
 	char		**argv;

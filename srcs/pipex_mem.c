@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:01:50 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/17 17:11:33 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:05:28 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_data	struct_mem_init(void)
 	prog_data.here_doc_pipefd[1] = 0;
 	prog_data.here_doc_flag = 0;
 	prog_data.cmds_list = NULL;
+	prog_data.first_node_ptr = NULL;
 	return (prog_data);
 }
 

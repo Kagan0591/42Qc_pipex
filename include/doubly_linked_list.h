@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:37:56 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/17 13:35:04 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:03:29 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct t_cmdinfos_data
 typedef struct t_cmdinfos
 {
 	t_cmdinfos_data		*var_data;
-	struct t_cmdinfos	*first_elem;
 	struct t_cmdinfos	*next;
 	struct t_cmdinfos	*previous;
 }t_cmdinfos;

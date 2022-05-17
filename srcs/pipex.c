@@ -6,11 +6,11 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/17 17:11:28 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:44:31 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "include/pipex.h"
 
 static int	here_doc(t_data *prog_data, char *limiter)
 {
@@ -37,12 +37,14 @@ static void	build_cmd_list(t_data *prog_data, int incrementor)
 	while (incrementor < (prog_data->argc - 1))
 	{
 		prog_data->cmds_list = ft_dllst_add_back(prog_data->cmds_list);
+		if (ft_dllst_size(prog_data->cmds_list) == 1)
+			prog_data->first_node_ptr = prog_data->cmds_list;
 		prog_data->cmds_list = ft_dllist_go_to_right(prog_data->cmds_list);
 		cmd_parsing(prog_data->cmds_list->var_data, \
 			prog_data->argv[incrementor], prog_data->envp);
 		incrementor++;
 	}
-	prog_data->cmds_list = prog_data->cmds_list->first_elem;
+	prog_data->cmds_list = ft_dllist_go_to_left(prog_data->cmds_list);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -69,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 	open_outfile(&prog_data, argc, argv);
 	build_cmd_list(&prog_data, i);
 	execution_time(&prog_data, envp);
+	prog_data.cmds_list = prog_data.first_node_ptr;
 	ft_dllst_clear(prog_data.cmds_list);
 	return (0);
 }
