@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/17 17:29:51 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:56:17 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static char	*recup_the_bin_path(char *bin_name, char **p_envp)
 	}
 	clear_char_tab(splitted_path);
 	free (complete_bin_path);
-	return (NULL);
+	perror(strerror(errno));
+	exit(errno);
 }
 
 int	cmd_parsing(t_cmdinfos_data *exec_data, char *p_argv, char **envp)

@@ -14,6 +14,7 @@ SRCS_FILES 		= pipex.c \
 				pipex_dll_addnodes.c \
 				pipex_dll_del.c \
 				pipex_dll_tools1.c \
+				pipex_error.c \
 
 #B_SRCS_FILES	=	\
 

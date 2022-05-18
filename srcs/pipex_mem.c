@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_mem.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:01:50 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/17 18:05:28 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:32:14 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_data	struct_mem_init(void)
+t_data	struct_mem_init(int argc, char **argv, char **envp)
 {
 	t_data	prog_data;
 
@@ -26,6 +26,9 @@ t_data	struct_mem_init(void)
 	prog_data.here_doc_flag = 0;
 	prog_data.cmds_list = NULL;
 	prog_data.first_node_ptr = NULL;
+	prog_data.argc = argc;
+	prog_data.argv = argv;
+	prog_data.envp = envp;
 	return (prog_data);
 }
 
