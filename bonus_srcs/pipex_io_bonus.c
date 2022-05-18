@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_io.c                                         :+:      :+:    :+:   */
+/*   pipex_io_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 10:21:05 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/18 17:59:07 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:01:29 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/pipex.h"
+#include "bonus_include/pipex_bonus.h"
 
 void	setup_input(t_data *prog_data)
 {

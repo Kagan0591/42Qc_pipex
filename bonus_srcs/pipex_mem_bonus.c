@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_mem.c                                        :+:      :+:    :+:   */
+/*   pipex_mem_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:01:50 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/18 17:59:12 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:01:36 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/pipex.h"
+#include "bonus_include/pipex_bonus.h"
 
 t_data	struct_mem_init(int argc, char **argv, char **envp)
 {

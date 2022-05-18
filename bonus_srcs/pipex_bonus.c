@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/18 16:57:48 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:00:50 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/pipex.h"
+#include "bonus_include/pipex_bonus.h"
+
+static int	here_doc(t_data *prog_data, char *limiter)
+{
+	char	*here_doc_tmp;
+
+	here_doc_tmp = NULL;
+	if (pipe(prog_data->here_doc_pipefd) == -1)
+	{
+		perror(NULL);
+		exit(errno);
+	}
+	here_doc_tmp = get_next_line(0);
+	while (ft_strncmp(here_doc_tmp, limiter, ft_strlen(limiter)) != 0)
+	{
+		ft_putstr_fd(here_doc_tmp, prog_data->here_doc_pipefd[WRITE_ENDPIPE]);
+		free(here_doc_tmp);
+		here_doc_tmp = get_next_line(0);
+	}
+	return (0);
+}
 
 static void	build_cmd_list(t_data *prog_data, int incrementor)
 {
@@ -32,10 +52,14 @@ int	main(int argc, char **argv, char **envp)
 	t_data	prog_data;
 	int		i;
 
-	if (argc != 5)
-		return (exit_args_limit());
 	prog_data = struct_mem_init(argc, argv, envp);
 	i = 2;
+	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	{
+		prog_data.here_doc_flag = 1;
+		here_doc(&prog_data, argv[2]);
+		i = 3;
+	}
 	if (open_infile(&prog_data, argv) == 2)
 	{
 		i = 3;

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 17 17:10:36 2022
+# Make data base, printed on Wed May 18 18:05:01 2022
 
 # Variables
 
@@ -30,23 +30,27 @@ VSCODE_LOG_NATIVE = false
 CURDIR := /mnt/c/Users/thomas/Documents/Programmation/42Qc_pipex
 # makefile
 SHELL = /bin/sh
-# makefile (from 'Makefile', line 41)
+# makefile (from 'Makefile', line 55)
 RM = rm -rf
+# makefile (from 'Makefile', line 35)
+B_SRCS_DIR = bonus_srcs/
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
 _ = /home/thomas/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/node
-# makefile (from 'Makefile', line 37)
+# makefile (from 'Makefile', line 51)
 CFLAGS = -Wall -Werror -Wextra -g
-# makefile (from 'Makefile', line 56)
+# makefile (from 'Makefile', line 70)
 BLUE = \033[34m
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # 'override' directive
 GNUMAKEFLAGS := 
+# makefile (from 'Makefile', line 19)
+B_SRCS_FILES = pipex_bonus.c pipex_mem_bonus.c pipex_exec_bonus.c pipex_files_handling_bonus.c pipex_io_bonus.c pipex_dll_addnodes_bonus.c pipex_dll_del_bonus.c pipex_dll_tools1_bonus.c pipex_error_bonus.c 
 # environment
 VSCODE_VERBOSE_LOGGING = true
-# makefile (from 'Makefile', line 32)
+# makefile (from 'Makefile', line 44)
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_FILES))
 # environment
 P9K_SSH = 0
@@ -56,23 +60,27 @@ VSCODE_CWD = /mnt/c/Program Files/Microsoft VS Code
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
 PATH = /home/thomas/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/remote-cli:/home/thomas/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/PuTTY/:/mnt/c/Program Files/mingw64/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Microsoft VS Code/bin:/mnt/c/Users/thomas/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/thomas/AppData/Local/Programs/Python/Python310/:/mnt/c/Users/thomas/AppData/Local/Microsoft/WindowsApps
-# makefile (from 'Makefile', line 47)
+# makefile (from 'Makefile', line 61)
 BOLD = \033[1m
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
-# makefile (from 'Makefile', line 46)
+# makefile (from 'Makefile', line 60)
 END = \033[0m
-# makefile (from 'Makefile', line 27)
-INCLUDE_DIR = include/
-# makefile (from 'Makefile', line 50)
-SELECTED = \033[7m
-# makefile (from 'Makefile', line 33)
-VPATH = $(SRCS_DIR) $(B_SRCS_DIR)
-# makefile (from 'Makefile', line 42)
-NORMINETTE = norminette
 # makefile (from 'Makefile', line 38)
+INCLUDE_DIR = include/
+# makefile (from 'Makefile', line 43)
+B_SRCS = $(addprefix $(B_SRCS_DIR), $(B_SRCS_FILES))
+# makefile (from 'Makefile', line 45)
+B_OBJS = $(addprefix $(B_OBJS_DIR), $(B_OBJS_FILES))
+# makefile (from 'Makefile', line 64)
+SELECTED = \033[7m
+# makefile (from 'Makefile', line 47)
+VPATH = $(SRCS_DIR) $(B_SRCS_DIR)
+# makefile (from 'Makefile', line 56)
+NORMINETTE = norminette
+# makefile (from 'Makefile', line 52)
 AR = ar -cr
-# makefile (from 'Makefile', line 24)
+# makefile (from 'Makefile', line 34)
 SRCS_DIR = srcs/
 # environment
 VSCODE_LOG_STACK = false
@@ -80,27 +88,29 @@ VSCODE_LOG_STACK = false
 VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-eb607265-6aa7-4600-a39c-65db864bbced.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
-# makefile (from 'Makefile', line 28)
+# makefile (from 'Makefile', line 40)
 LIBFT_DIR = 42Qc_libft/
+# makefile (from 'Makefile', line 37)
+B_OBJS_DIR = bonus_objs/
 # environment
 LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 # automatic
 %F = $(notdir $%)
 # environment
 DISPLAY = :0.0
-# makefile (from 'Makefile', line 49)
+# makefile (from 'Makefile', line 63)
 URL = \033[4m
 # environment
 VSCODE_PIPE_LOGGING = true
 # makefile (from 'Makefile', line 9)
-SRCS_FILES = pipex.c pipex_mem.c pipex_exec.c pipex_files_handling.c pipex_io.c pipex_dll_addnodes.c pipex_dll_del.c pipex_dll_tools1.c 
+SRCS_FILES = pipex.c pipex_mem.c pipex_exec.c pipex_files_handling.c pipex_io.c pipex_dll_addnodes.c pipex_dll_del.c pipex_dll_tools1.c pipex_error.c 
 # environment
 PWD = /mnt/c/Users/thomas/Documents/Programmation/42Qc_pipex
 # default
 .LOADED := 
 # environment
 WSL_INTEROP = /run/WSL/7396_interop
-# makefile (from 'Makefile', line 54)
+# makefile (from 'Makefile', line 68)
 GREEN = \033[32m
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
@@ -122,17 +132,17 @@ MAKELEVEL := 0
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
-# makefile (from 'Makefile', line 30)
+# makefile (from 'Makefile', line 42)
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 # environment
 SHLVL = 0
-# makefile (from 'Makefile', line 59)
+# makefile (from 'Makefile', line 73)
 WHITE = \033[37m
-# makefile (from 'Makefile', line 43)
-LIBFT = $(MAKE) --silent -C $(LIBFT_DIR)
-# makefile (from 'Makefile', line 36)
-CC = gcc
 # makefile (from 'Makefile', line 57)
+LIBFT = $(MAKE) --silent -C $(LIBFT_DIR)
+# makefile (from 'Makefile', line 50)
+CC = gcc
+# makefile (from 'Makefile', line 71)
 VIOLET = \033[35m
 # default
 MAKE_VERSION := 4.2.1
@@ -150,13 +160,15 @@ LESS = -R
 VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/thomas/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
 # default
 MAKE_COMMAND := make
+# makefile (from 'Makefile', line 31)
+B_OBJS_FILES = $(B_SRCS_FILES:.c=.o)
 # environment
 OLDPWD = /mnt/c/Program Files/Microsoft VS Code
 # default
 .VARIABLES := 
 # automatic
 *F = $(notdir $*)
-# makefile (from 'Makefile', line 53)
+# makefile (from 'Makefile', line 67)
 RED = \033[31m
 # makefile
 MAKEFLAGS = pqrR
@@ -164,24 +176,26 @@ MAKEFLAGS = pqrR
 MFLAGS = -pqrR
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
-# makefile (from 'Makefile', line 52)
+# makefile (from 'Makefile', line 66)
 BLACK = \033[30m
-# makefile (from 'Makefile', line 26)
+# makefile (from 'Makefile', line 36)
 OBJS_DIR = objs/
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
-# makefile (from 'Makefile', line 55)
+# makefile (from 'Makefile', line 69)
 YELLOW = \033[33m
 # automatic
 +F = $(notdir $+)
 # environment
 VSCODE_HANDLES_SIGPIPE = true
+# makefile (from 'Makefile', line 39)
+B_INCLUDE_DIR = bonus_include/
 # default
 MAKEFILES := 
 # automatic
 <F = $(notdir $<)
-# makefile (from 'Makefile', line 21)
-OBJS_FILES = $(SRCS_FILES:.c=.o) 
+# makefile (from 'Makefile', line 30)
+OBJS_FILES = $(SRCS_FILES:.c=.o)
 # environment
 PAGER = less
 # environment
@@ -194,7 +208,7 @@ HOSTTYPE = x86_64
 SUFFIXES := 
 # default
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
-# makefile (from 'Makefile', line 48)
+# makefile (from 'Makefile', line 62)
 ITALIC = \033[3m
 # default
 .RECIPEPREFIX := 
@@ -202,14 +216,14 @@ ITALIC = \033[3m
 LANG = C
 # environment
 TERM = xterm-256color
-# makefile (from 'Makefile', line 58)
+# makefile (from 'Makefile', line 72)
 BEIGE = \033[36m
 # environment
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu-20.04
 # variable set hash-table stats:
-# Load=99/1024=10%, Rehash=0, Collisions=8/138=6%
+# Load=106/1024=10%, Rehash=0, Collisions=16/150=11%
 
 # Pattern-specific Variable Values
 
@@ -217,23 +231,34 @@ WSL_DISTRO_NAME = Ubuntu-20.04
 
 # Directories
 
-# . (device 47, inode 14918173765667800): 14 files, no impossibilities.
+# . (device 47, inode 14918173765667800): 19 files, no impossibilities.
+# bonus_srcs (device 47, inode 12947848928690350): 11 files, no impossibilities.
 # srcs (device 47, inode 2814749767355106): 11 files, no impossibilities.
 
-# 25 files, no impossibilities in 2 directories.
+# 41 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
 objs/%.o: %.c
-#  recipe to execute (from 'Makefile', line 65):
+#  recipe to execute (from 'Makefile', line 79):
 	@${CC} ${CFLAGS} -I${LIBFT_DIR} -I${INCLUDE_DIR} -I. -o $@ -c $<
 
-# 1 implicit rules, 0 (0.0%) terminal.
+bonus_objs/%.o: %.c
+#  recipe to execute (from 'Makefile', line 82):
+	@${CC} ${CFLAGS} -I${LIBFT_DIR} -I${B_INCLUDE_DIR} -I. -o $@ -c $<
+
+# 2 implicit rules, 0 (0.0%) terminal.
 
 # Files
 
 # Not a target:
 objs/pipex_exec.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+bonus_objs/pipex_exec_bonus.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -256,6 +281,7 @@ phony: all obj test norm leaks clean fclean re bonus
 .SUFFIXES:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -267,7 +293,7 @@ objs/pipex.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-17 17:09:40.3319068
+#  Last modified 2022-05-18 18:04:25.5404014
 #  File has been updated.
 #  Successfully updated.
 
@@ -277,14 +303,19 @@ objs/pipex_dll_tools1.o:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 test: norm all
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 81):
+#  recipe to execute (from 'Makefile', line 103):
 	@echo "\n${GEIGE}${BOLD}Also the norminette have been checked on the push_swap sources and headers files.${END}\nIf you need to continue with valgrind to look for some leaks retry with ${VIOLET}make leaks${END}"
 	sleep 8
+
+# Not a target:
+bonus_objs/pipex_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 objs/pipex_dll_del.o:
@@ -293,26 +324,48 @@ objs/pipex_dll_del.o:
 #  File has not been updated.
 
 # Not a target:
-bonus:
+bonus_objs/pipex_dll_tools1_bonus.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+bonus_objs/pipex_dll_del_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bonus: b_obj bonus_objs/pipex_bonus.o bonus_objs/pipex_mem_bonus.o bonus_objs/pipex_exec_bonus.o bonus_objs/pipex_files_handling_bonus.o bonus_objs/pipex_io_bonus.o bonus_objs/pipex_dll_addnodes_bonus.o bonus_objs/pipex_dll_del_bonus.o bonus_objs/pipex_dll_tools1_bonus.o bonus_objs/pipex_error_bonus.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 91):
+	@${LIBFT}
+	@${CC} ${B_OBJS} -L${LIBFT_DIR} -lft -o ${NAME} -lm
+	@echo "\n${BLUE}${BOLD}An executable '${BLINK2} pipex ${END}${BLUE}${BOLD}' have been created successfully!${END}"
+	@sleep 1
 
 fclean: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 96):
-	@${RM} ${NAME} ${NAME}.dSYM ${OBJS_DIR}
+#  recipe to execute (from 'Makefile', line 118):
+	@${RM} ${NAME} ${NAME}.dSYM ${OBJS_DIR} ${B_OBJS_DIR}
 	@$(LIBFT) fclean
 	@echo "\n${BOLD}${GREEN}The executable file ' ${BLUE}pipex${GREEN} ' have been ${RED}deleted ${END}${BOLD}${GREEN}too.${END}"
 	@sleep 0.5
+
+# Not a target:
+objs/pipex_error.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 leaks: re
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 85):
+#  recipe to execute (from 'Makefile', line 107):
 	valgrind --leaks-check=full --show-leak-kinds=all -s ./test
 
 obj:
@@ -339,15 +392,28 @@ obj:
 # ? := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/12=8%
-#  recipe to execute (from 'Makefile', line 78):
+#  recipe to execute (from 'Makefile', line 97):
 	@mkdir -p ${OBJS_DIR}
 
 norm: fclean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 88):
-	@$(NORMINETTE) ${SRCS_DIR} ${INCLUDE_DIR}
+#  recipe to execute (from 'Makefile', line 110):
+	@$(NORMINETTE) ${SRCS_DIR} ${INCLUDE_DIR} ${B_SRCS_DIR} ${B_INCLUDE_DIR}
+
+b_obj:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 100):
+	@mkdir -p ${B_OBJS_DIR}
+
+# Not a target:
+bonus_objs/pipex_error_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 .DEFAULT:
@@ -376,10 +442,22 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 91):
-	@${RM} ${OBJS}
+#  recipe to execute (from 'Makefile', line 113):
+	@${RM} ${OBJS} ${B_OBJS}
 	@echo "\n${BOLD}${GREEN}The pipex objects files have been ${RED}deleted ${END}${BOLD}${GREEN}correctly.${END}"
 	@sleep 0.5
+
+# Not a target:
+bonus_objs/pipex_dll_addnodes_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+bonus_objs/pipex_mem_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 objs/pipex_io.o:
@@ -393,31 +471,43 @@ objs/pipex_files_handling.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-pipex: objs/pipex.o objs/pipex_mem.o objs/pipex_exec.o objs/pipex_files_handling.o objs/pipex_io.o objs/pipex_dll_addnodes.o objs/pipex_dll_del.o objs/pipex_dll_tools1.o
+# Not a target:
+bonus_objs/pipex_io_bonus.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 68):
+
+# Not a target:
+bonus_objs/pipex_files_handling_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+pipex: objs/pipex.o objs/pipex_mem.o objs/pipex_exec.o objs/pipex_files_handling.o objs/pipex_io.o objs/pipex_dll_addnodes.o objs/pipex_dll_del.o objs/pipex_dll_tools1.o objs/pipex_error.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 85):
 	@${LIBFT}
 	@${CC} ${OBJS} -L${LIBFT_DIR} -lft -o ${NAME} -lm
 	@echo "\n${BLUE}${BOLD}An executable '${BLINK2} pipex ${END}${BLUE}${BOLD}' have been created successfully!${END}"
 	@sleep 1
 
 # files hash-table stats:
-# Load=22/1024=2%, Rehash=0, Collisions=0/69=0%
+# Load=33/1024=3%, Rehash=0, Collisions=3/94=3%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # General ('VPATH' variable) search path:
-# srcs
+# srcs:bonus_srcs
 
-# strcache buffers: 1 (0) / strings = 49 / storage = 534 B / avg = 10 B
-# current buf: size = 8162 B / used = 534 B / count = 49 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 74 / storage = 1108 B / avg = 14 B
+# current buf: size = 8162 B / used = 1108 B / count = 74 / avg = 14 B
 
-# strcache performance: lookups = 86 / hit rate = 43%
+# strcache performance: lookups = 121 / hit rate = 38%
 # hash-table stats:
-# Load=49/8192=1%, Rehash=0, Collisions=3/86=3%
-# Finished Make data base on Tue May 17 17:10:36 2022
+# Load=74/8192=1%, Rehash=0, Collisions=6/121=5%
+# Finished Make data base on Wed May 18 18:05:01 2022
 
  

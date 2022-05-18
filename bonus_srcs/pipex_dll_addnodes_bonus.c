@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/pipex.h"
+#include "bonus_include/pipex_bonus.h"
 
 t_cmdinfos	*ft_dllst_new(void)
 {
