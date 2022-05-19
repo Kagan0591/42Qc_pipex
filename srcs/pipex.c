@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/18 16:57:48 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:45:46 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	prog_data = struct_mem_init(argc, argv, envp);
 	i = 2;
 	if (open_infile(&prog_data, argv) == 2)
-	{
-		i = 3;
 		prog_data.infile_flag = 1;
-	}
 	open_outfile(&prog_data, argc, argv);
 	build_cmd_list(&prog_data, i);
 	execution_time(&prog_data, envp);

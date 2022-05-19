@@ -104,7 +104,7 @@ test: norm all
 	sleep 8
 
 leaks: re
-	valgrind --leaks-check=full --show-leak-kinds=all -s ./test
+	valgrind --leak-check=full --show-leak-kinds=all --show-error-list=yes ./test
 
 norm: fclean
 	@$(NORMINETTE) ${SRCS_DIR} ${INCLUDE_DIR} ${B_SRCS_DIR} ${B_INCLUDE_DIR}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:48:46 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/18 18:48:48 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/19 10:49:10 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

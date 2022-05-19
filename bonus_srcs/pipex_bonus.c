@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:48:03 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/18 18:48:05 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:44:06 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	build_cmd_list(t_data *prog_data, int incrementor)
 			prog_data->argv[incrementor], prog_data->envp);
 		incrementor++;
 	}
-	prog_data->cmds_list = ft_dllist_go_to_left(prog_data->cmds_list);
+	if (prog_data->cmds_list)
+		prog_data->cmds_list = ft_dllist_go_to_left(prog_data->cmds_list);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -52,6 +53,8 @@ int	main(int argc, char **argv, char **envp)
 	t_data	prog_data;
 	int		i;
 
+	if (argc < 5)
+		return (exit_args_limit());
 	prog_data = struct_mem_init(argc, argv, envp);
 	i = 2;
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
@@ -61,10 +64,7 @@ int	main(int argc, char **argv, char **envp)
 		i = 3;
 	}
 	if (open_infile(&prog_data, argv) == 2)
-	{
-		i = 3;
 		prog_data.infile_flag = 1;
-	}
 	open_outfile(&prog_data, argc, argv);
 	build_cmd_list(&prog_data, i);
 	execution_time(&prog_data, envp);

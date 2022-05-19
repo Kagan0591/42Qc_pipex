@@ -6,7 +6,7 @@
 			"request": "launch",
 			"name": "Debug_lldb",
 			"program": "${workspaceFolder}/pipex",
-			"args": ["file1", "lass", "wc", "outfile"],
+			"args": ["cat", "ls", "cat", "outfile"],
 			"cwd": "${workspaceFolder}"
 		},
 		{

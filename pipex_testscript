@@ -1,0 +1,55 @@
+#!/bin/bash
+
+MY_FUNCTION_RET_VAR
+ORIGIN_FUNCTION_VAR
+
+echo "Partie mandatoire"
+
+echo "Test avec aucun argument"
+./pipex
+
+echo "Test avec moins de 4 arguments"
+echo "T1"
+./pipex arg1
+echo "T2"
+./pipex arg1 arg2
+echo "T3"
+./pipex arg1 arg2 arg3
+echo "type a key to continue"
+read
+clear
+
+echo "Test avec un fichier d'entré incompatible"
+echo "Explication du test: Si le fichier d'entré n'est pas valide, le programme pipex, comme la commande original, \
+devrait passer la première commande et executer les autres en gardant le input de la première execution sur configuré sur \
+l'entré standard du système. Donc, ici 'ls' serait executé et sa sortie standard serait pipe à l'entré standard de la \
+dernière execution 'cat'"
+./pipex cat "ls $HOME" cat outfile
+echo "Le fichier outfile devrait maintenant contenir les informations retourné par la commande ls, soit le repertoire $HOME"
+echo "Retour de votre programme"
+cat outfile
+echo ""
+echo "Retour de la commande ls original du dossier $home"
+ls $home
+echo "type a key to continue"
+read
+clear
+
+echo "Test sans fichier de sortie"
+echo "Explication du test: Si le fichier e sortie n'existe pas, le programme pipex devrait le créer avec les droit approprié. S'il n'est pas \
+valide ou que les droits ne vous permet pas d'écrire à l'intérieur, le programme pipex devrait retourer l'erreur \
+'No such file or directory', comme la commande original."
+echo "T1 --> Fichier inexistant, le fichier devrait être maintenant créé et les droits devrait être lecture et écriture < 0666 > ou < --wxr-xr-x >"
+./pipex infile cat cat no_outfile
+ls -l no_outfile
+echo ""
+
+echo "T2 --> Droits dur le fichier insufisant, au minimum les droit sur le fichier devrait être écriture < 0222 >"
+touch out
+chmod 0000 out
+./pipex infile cat cat out
+echo "Le programme devrais "
+rm -f out
+echo "type a key to continue"
+read
+clear

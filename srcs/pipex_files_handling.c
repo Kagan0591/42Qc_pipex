@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_files_handling.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 09:51:03 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/17 13:56:20 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:25:51 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ int	open_infile(t_data *prog_data, char **argv)
 
 void	open_outfile(t_data *prog_data, int argc, char **argv)
 {
-	if (access(argv[argc - 1], R_OK | W_OK) == -1 && errno != ENOENT)
+	if (access(argv[argc - 1], W_OK) == -1 && errno != ENOENT)
 	{
 		perror(NULL);
 		exit(errno);
 	}
 	else if (prog_data->here_doc_flag == 1)
 		prog_data->filesfd[1] = open(argv[(argc - 1)], \
-			O_WRONLY | O_CREAT | O_APPEND, S_IRWXU | S_IRWXG | S_IRWXO);
+			O_WRONLY | O_CREAT | O_APPEND, S_IWUSR | S_IWGRP | S_IWOTH);
 	else
 		prog_data->filesfd[1] = open(argv[(argc - 1)], \
-			O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU | S_IRWXG | S_IRWXO);
+			O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR | S_IWGRP | S_IWOTH);
 }
