@@ -122,12 +122,16 @@ read
 clear
 
 
-printf "${SELECTED}Test avec une mauvaise commande${SELECTEDLINE}\n\n"
+printf "${SELECTED}Test avec avec la première commande erroné${SELECTEDLINE}\n\n"
 printf "Explication du test: Si une commande n'existe pas, le programme pipex devrait retoruner: 'No such file or directory' \
-tel que la commande original retourne et quitter sans rien faire.\n\n"
-printf "${BOLD}${RED}BadTest1 -->${END} ./pipex infile cmmd cat outfile\n\n"
+tel que la commande original retourne, passer la commande et continuer sans tenir compte du pipe ouvert précedemment \
+par la dernière bonne commande.\n\n"
+printf "${BOLD}${RED}BadTest1 -->${END} ./pipex infile cmd cat outfile\n\n"
 ./pipex infile cmmd cat outfile
-valgrind --log-fd=3 ./pipex infile cmmd cat outfile
+valgrind --log-fd=3 ./pipex infile cat cmd outfile
+printf "${BOLD}${RED}BadTest2 -->${END} ./pipex infile cat cmd outfile\n\n"
+./pipex infile cmmd cat outfile
+valgrind --log-fd=3 ./pipex infile cat cmd outfile
 printf "\nHit enter to continue\n"
 read
 clear
@@ -278,12 +282,19 @@ read
 clear
 
 
-printf "${SELECTED}Test avec une mauvaise commande${SELECTEDLINE}\n\n"
+printf "${SELECTED}Test avec avec la première commande erroné${SELECTEDLINE}\n\n"
 printf "Explication du test: Si une commande n'existe pas, le programme pipex devrait retoruner: 'No such file or directory' \
-tel que la commande original retourne et quitter sans rien faire.\n\n"
-printf "${BOLD}${RED}BadTest1 -->${END} ./pipex infile cmmd cat outfile\n\n"
-./pipex infile cmmd cat outfile
-valgrind --log-fd=3 ./pipex infile cmmd cat outfile
+tel que la commande original retourne, passer la commande et continuer sans tenir compte du pipe ouvert précedemment \
+par la dernière bonne commande.\n\n"
+printf "${BOLD}${RED}BadTest3 -->${END} ./pipex infile cmd cat ls outfile\n\n"
+./pipex infile cmd cat ls outfile
+valgrind --log-fd=3 ./pipex infile cmd cat ls outfile
+printf "${BOLD}${RED}BadTest4 -->${END} ./pipex infile ls cmd cat outfile\n\n"
+./pipex infile ls cmd cat outfile
+valgrind --log-fd=3 ./pipex infile ls cmd cat outfile
+printf "${BOLD}${RED}BadTest4 -->${END} ./pipex infile ls cat cmd outfile\n\n"
+./pipex infile ls cat cmd outfile
+valgrind --log-fd=3 ./pipex infile ls cat cmd outfile
 printf "\nHit enter to continue\n"
 read
 clear
