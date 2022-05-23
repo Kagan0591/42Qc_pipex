@@ -40,7 +40,7 @@ t_data	struct_mem_init(int argc, char **argv, char **envp);
 void	clear_char_tab(char **tab);
 int		open_infile(t_data *prog_data, char **argv);
 void	open_outfile(t_data *prog_data, int argc, char **argv);
-int		cmd_parsing(t_cmdinfos_data *exec_data, char *p_argv, char **envp);
+void	cmd_parsing(t_cmdinfos_data *exec_data, char *p_argv, char **envp);
 int		execution_time(t_data *prog_data, char **envp);
 void	setup_input(t_data *prog_data);
 void	setup_output(t_data *prog_data);

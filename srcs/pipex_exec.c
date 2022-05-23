@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 10:19:28 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/20 23:46:16 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:19:18 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,13 @@ static char	*recup_the_bin_path(char *bin_name, char **p_envp)
 	return (NULL);
 }
 
-int	cmd_parsing(t_cmdinfos_data *exec_data, char *p_argv, char **envp)
+void	cmd_parsing(t_cmdinfos_data *exec_data, char *p_argv, char **envp)
 {
 	exec_data->cmd_argument = ft_split(p_argv, ' ');
 	exec_data->absolute_path = \
 		recup_the_bin_path(exec_data->cmd_argument[0], envp);
 	if (!exec_data->absolute_path)
-	{
 		perror(NULL);
-		return (errno);
-	}
-	return (0);
 }
 
 int	execution_time(t_data *prog_data, char **envp)

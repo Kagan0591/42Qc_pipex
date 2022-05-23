@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 09:33:33 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/22 20:28:06 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:21:12 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,12 @@ static void	build_cmd_list(t_data *prog_data, int incrementor)
 		if (ft_dllst_size(prog_data->cmds_list) == 1)
 			prog_data->first_node_ptr = prog_data->cmds_list;
 		prog_data->cmds_list = ft_dllist_go_to_right(prog_data->cmds_list);
-		if (cmd_parsing(prog_data->cmds_list->var_data, \
-			prog_data->argv[incrementor], prog_data->envp) != 0)
-		{
-			prog_data->cmds_list = prog_data->first_node_ptr;
-			ft_dllst_clear(prog_data->cmds_list);
-			exit(errno);
-		}
+		cmd_parsing(prog_data->cmds_list->var_data, \
+			prog_data->argv[incrementor], prog_data->envp);
 		incrementor++;
 	}
-	prog_data->cmds_list = ft_dllist_go_to_left(prog_data->cmds_list);
+	if (prog_data->cmds_list)
+		prog_data->cmds_list = ft_dllist_go_to_left(prog_data->cmds_list);
 }
 
 int	main(int argc, char **argv, char **envp)

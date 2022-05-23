@@ -1,9 +1,9 @@
-###_*_*_*_*_*_*_*_*_*_*_*_*_Makefile_ft_printf_*_*_*_*_*_*_*_*_*_*_*_*_###
-## Pour compiler les bonus, si il y a en a, décommenter les lignes		##
-## B_SRCS_FILES, B_SRCS_DIR, B_SRCS et dans les instructions de la ligne##
-## OBJS_FILES, décommenter $(B_SRCS_FILES:.c=.o)						##
+###_*_*_*_*_*_*_*_*_*_*_*_*_*_*_Makefile_pipex_*_*_*_*_*_*_*_*_*_*_*_*_*_*_###
+##	 Pour compiler les bonus, si il y a en a, décommenter les lignes## 		##
+##	 B_SRCS_FILES, B_SRCS_DIR, B_SRCS et dans les instructions de la ligne 	##
+##	 OBJS_FILES, décommenter $(B_SRCS_FILES:.c=.o)						 	##
 
-###---------------------------# VARIABLES ##---------------------------###
+###-----------------------------# VARIABLES ##-----------------------------###
 NAME = pipex
 
 SRCS_FILES 		= pipex.c \
@@ -72,7 +72,7 @@ VIOLET		= \033[35m
 BEIGE		= \033[36m
 WHITE		= \033[37m
 
-###----------------------------## REGLES ##----------------------------###
+###------------------------------## REGLES ##------------------------------###
 all: obj $(NAME)
 
 $(OBJS_DIR)%.o:%.c

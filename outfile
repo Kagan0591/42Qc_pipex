@@ -1,7 +1,11 @@
-PING google.com (142.251.32.78): 56 data bytes
-64 bytes from 142.251.32.78: icmp_seq=0 ttl=117 time=11.216 ms
-64 bytes from 142.251.32.78: icmp_seq=1 ttl=117 time=11.282 ms
-
---- google.com ping statistics ---
-2 packets transmitted, 2 packets received, 0.0% packet loss
-round-trip min/avg/max/stddev = 11.216/11.249/11.282/0.033 ms
+42Qc_libft
+Makefile
+bonus_include
+bonus_objs
+bonus_srcs
+include
+infile
+outfile
+pipex
+pipex_testscript
+srcs
