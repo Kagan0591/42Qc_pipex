@@ -26,17 +26,17 @@ if [[ -f pipex ]]
 then
 {
 	printf "\n${BOLD}${BLUE}L'executable semble déjà présent, tentative de re-compilation...${END}\n\n"
-	make re
+	make re > /dev/null
 }
 else
 {
 	printf "\n${BOLD}${BLUE}L'executable n'est pas présent, tentative de compilation...${END}\n\n"
-	make
+	make > /dev/null
 }
 fi
 
 FILENAME="/$PWD/valgrind_report.txt"
-exec 3<>$FILENAME # For open the file with fd3
+exec 3<>$FILENAME # Opening the file with fd3
 
 # Début des test
 clear
@@ -49,12 +49,16 @@ printf "${BOLD}${RED}BadTest1 -->${END} ./pipex\n"
 valgrind --log-fd=3 ./pipex
 printf "${BOLD}${RED}BadTest2 -->${END} ./pipex arg1\n"
 ./pipex arg1
+valgrind --log-fd=3 ./pipex arg1
 printf "${BOLD}${RED}BadTest3 -->${END} ./pipex arg1 arg2\n"
 ./pipex arg1 arg2
+valgrind --log-fd=3 ./pipex arg1 arg2
 printf "${BOLD}${RED}BadTest4 -->${END} ./pipex arg1 arg2 arg3\n"
 ./pipex arg1 arg2 arg3
+valgrind --log-fd=3 ./pipex arg1 arg2 arg3
 printf "${BOLD}${RED}BadTest4 -->${END} ./pipex arg1 arg2 arg3 arg4 arg5\n"
 ./pipex arg1 arg2 arg3 arg4 arg5
+valgrind --log-fd=3 ./pipex arg1 arg2 arg3 arg4 arg5
 
 printf "\n\n${SELECTED}Test avec 4 arguments, tous valide${SELECTEDLINE}\n\n"
 printf "AlphaBravoCharlie" > infile
@@ -62,6 +66,7 @@ printf "Voici ce que contient le fichier infile :\n"
 cat infile
 printf "\n\n${BOLD}${GREEN}GoodTest1 -->${END} ./pipex infile ls ''grep pipex'' outfile\n"
 ./pipex infile ls "grep pipex" outfile
+valgrind --log-fd=3 ./pipex infile ls "grep pipex" outfile
 printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\nHit enter to continue\n"
@@ -81,6 +86,7 @@ printf "\n${BOLD}${RED}BadTest1 -->${END} ./pipex badfile ls wc outfile\n\n"
 printf "Le terminal est figé ? hit enter quelque fois. Puis, pour mettre fin au processus en attente d'input et continuer, \
 utiliser la combinaison ${BOLD}${VIOLET}Ctrl+d${END} \n"
 ./pipex badfile ls "wc -l" outfile
+valgrind --log-fd=3 ./pipex badfile ls "wc -l" outfile
 printf "\nMalgré l'erreur encourue, le fichier outfile devrait maintenant contenir un chiffre indiquand le nombre de ligne présent \
 dans le fichier qui est la valeur de retour de wc.\n"
 cat outfile
@@ -99,14 +105,17 @@ cat infile
 printf "\n\n${BOLD}${GREEN}GoodTest1 (fichier inexistant) -->${END} ./pipex infile cat cat no_outfile\n"
 rm -f no_outfile
 ./pipex infile cat cat no_outfile
+valgrind --log-fd=3 ./pipex infile cat cat no_outfile
 printf "\nVoici ce que contient maintenant le fichier no_outfile créé par pipex et une apercu des droits sur celui-ci :\n"
 cat no_outfile
+printf "\n"
 ls -l no_outfile
 rm -f no_outfile
 touch private_out
 chmod 0000 private_out
 printf "\n\n${BOLD}${RED}BadTest1 (Droit insufisant) -->${END} ./pipex infile cat cat out\n"
 ./pipex infile cat cat private_out
+valgrind --log-fd=3 ./pipex infile cat cat private_out
 rm -f private_out
 printf "\nHit enter to continue\n"
 read
@@ -118,6 +127,7 @@ printf "Explication du test: Si une commande n'existe pas, le programme pipex de
 tel que la commande original retourne et quitter sans rien faire.\n\n"
 printf "${BOLD}${RED}BadTest1 -->${END} ./pipex infile cmmd cat outfile\n\n"
 ./pipex infile cmmd cat outfile
+valgrind --log-fd=3 ./pipex infile cmmd cat outfile
 printf "\nHit enter to continue\n"
 read
 clear
@@ -132,6 +142,7 @@ printf "Voici ce que contient le fichier infile :\n"
 cat infile
 printf "\n\n${BOLD}${RED}BadTest1 -->${END} ./pipex infile cat cat infile\n"
 ./pipex infile cat cat infile
+valgrind --log-fd=3 ./pipex infile cat cat infile
 printf "\nVoici ce que contient maintenant le fichier infile :\n"
 cat infile
 printf "\ntype a key to continue\n"
@@ -143,6 +154,7 @@ printf "Le fichier outfile contient a ce moment :\n"
 cat outfile
 printf "\n\n${BOLD}${GREEN}GoodTest1 -->${END} ./pipex infile ls ''wc -l'' outfile\n"
 ./pipex infile ls "wc -l" outfile
+valgrind --log-fd=3 ./pipex infile ls "wc -l" outfile
 printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\n${BOLD}${GREEN}GoodTest2 -->${END} ./pipex infile cat cat outfile\n\n"
@@ -150,10 +162,12 @@ printf "JulietteKiloLima" > infile
 printf "Voici ce que contient le fichier infile :\n"
 cat infile
 ./pipex infile cat cat outfile
+valgrind --log-fd=3 ./pipex infile cat cat outfile
 printf "\n\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\n\n${BOLD}${GREEN}GoodTest3 -->${END} ./pipex infile ''ping -c2 google.com'' cat outfile\n\n"
 ./pipex infile "ping -c2 google.com" cat outfile
+valgrind --log-fd=3 ./pipex infile "ping -c2 google.com" cat outfile
 printf "Voici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\ntype a key to continue\n"
@@ -163,19 +177,24 @@ clear
 printf "${SELECTED}Partie bonus${SELECTEDLINE}"
 sleep 2
 clear
-make fclean
-make bonus
+printf "${BOLD}${BLUE}Recompilation pour la partie bonus...${END}"
+make fclean > /dev/null
+make bonus > /dev/null
 clear
 
 printf "${SELECTED}Test avec moins de 4 arguments${SELECTEDLINE}\n\n"
 printf "${BOLD}${RED}BadTest1 -->${END} ./pipex\n"
 ./pipex
+valgrind --log-fd=3 ./pipex
 printf "${BOLD}${RED}BadTest2 -->${END} ./pipex arg1\n"
 ./pipex arg1
+valgrind --log-fd=3 ./pipex arg1
 printf "${BOLD}${RED}BadTest3 -->${END} ./pipex arg1 arg2\n"
 ./pipex arg1 arg2
+valgrind --log-fd=3 ./pipex arg1 arg2
 printf "${BOLD}${RED}BadTest4 -->${END} ./pipex arg1 arg2 arg3\n"
 ./pipex arg1 arg2 arg3
+valgrind --log-fd=3 ./pipex arg1 arg2 arg3
 
 printf "\n\n${SELECTED}Test avec 4 arguments ou plus, tous valide${SELECTEDLINE}\n\n"
 printf "AlphaBravoCharlie" > infile
@@ -183,22 +202,27 @@ printf "Voici ce que contient le fichier infile :\n"
 cat infile
 printf "\n\n${BOLD}${GREEN}GoodTest1 -->${END} ./pipex infile ls ''grep pipex'' outfile\n"
 ./pipex infile ls "grep pipex" outfile
+valgrind --log-fd=3 ./pipex infile ls "grep pipex" outfile
 printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\n\n${BOLD}${GREEN}GoodTest2 -->${END} ./pipex infile ''nslookup 42quebec.com'' ''grep Server:'' cat outfile\n"
 ./pipex infile "nslookup 42quebec.com" "grep Server:" cat outfile
+valgrind --log-fd=3 ./pipex infile "nslookup 42quebec.com" "grep Server:" cat outfile
 printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\n\n${BOLD}${GREEN}GoodTest3 -->${END} ./pipex infile ''ping -c2 google.com'' ''grep packets'' ''ls'' ''cat'' outfile\n"
 ./pipex infile "ping -c2 google.com" "grep packets" "ls" "cat" outfile
+valgrind --log-fd=3 ./pipex infile "ping -c2 google.com" "grep packets" "ls" "cat" outfile
 printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\n\n${BOLD}${GREEN}GoodTest4 -->${END} ./pipex infile ''ping -c2 google.com'' ''grep packets'' ''cat'' ''cat'' outfile\n"
 ./pipex infile "ping -c2 google.com" "grep packets" "cat" "cat" outfile
+valgrind --log-fd=3 ./pipex infile "ping -c2 google.com" "grep packets" "cat" "cat" outfile
 printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\n\n${BOLD}${GREEN}GoodTest5 -->${END} ./pipex infile cat cat cat cat cat cat cat outfile\n"
 ./pipex infile cat cat cat cat cat cat cat outfile
+valgrind --log-fd=3 ./pipex infile cat cat cat cat cat cat cat outfile
 printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\nHit enter to continue\n"
@@ -218,6 +242,7 @@ printf "\n${BOLD}${RED}BadTest1 -->${END} ./pipex badfile ls wc outfile\n\n"
 printf "Le terminal est figé ? hit enter quelque fois. Puis, pour mettre fin au processus en attente d'input et continuer, \
 utiliser la combinaison ${BOLD}${VIOLET}Ctrl+d${END} \n"
 ./pipex badfile ls "wc -l" outfile
+valgrind --log-fd=3 ./pipex badfile ls "wc -l" outfile
 printf "\nMalgré l'erreur encourue, le fichier outfile devrait maintenant contenir un chiffre indiquand le nombre de ligne présent \
 dans le fichier qui est la valeur de retour de wc.\n"
 cat outfile
@@ -236,14 +261,17 @@ cat infile
 printf "\n\n${BOLD}${GREEN}GoodTest1 (fichier inexistant) -->${END} ./pipex infile cat cat no_outfile\n"
 rm -f no_outfile
 ./pipex infile cat cat no_outfile
+valgrind --log-fd=3 ./pipex infile cat cat no_outfile
 printf "\nVoici ce que contient maintenant le fichier no_outfile créé par pipex et une apercu des droits sur celui-ci :\n"
 cat no_outfile
+printf "\n"
 ls -l no_outfile
 rm -f no_outfile
 touch private_out
 chmod 0000 private_out
 printf "\n\n${BOLD}${RED}BadTest1 (Droit insufisant) -->${END} ./pipex infile cat cat out\n"
 ./pipex infile cat cat private_out
+valgrind --log-fd=3 ./pipex infile cat cat private_out
 rm -f private_out
 printf "\nHit enter to continue\n"
 read
@@ -255,6 +283,7 @@ printf "Explication du test: Si une commande n'existe pas, le programme pipex de
 tel que la commande original retourne et quitter sans rien faire.\n\n"
 printf "${BOLD}${RED}BadTest1 -->${END} ./pipex infile cmmd cat outfile\n\n"
 ./pipex infile cmmd cat outfile
+valgrind --log-fd=3 ./pipex infile cmmd cat outfile
 printf "\nHit enter to continue\n"
 read
 clear
@@ -269,6 +298,7 @@ printf "Voici ce que contient le fichier infile :\n"
 cat infile
 printf "\n\n${BOLD}${RED}BadTest1 -->${END} ./pipex infile cat cat infile\n"
 ./pipex infile cat cat infile
+valgrind --log-fd=3 ./pipex infile cat cat infile
 printf "\nVoici ce que contient maintenant le fichier infile :\n"
 cat infile
 printf "\ntype a key to continue\n"
@@ -281,6 +311,7 @@ printf "Le fichier outfile contient a ce moment :\n"
 cat outfile
 printf "\n\n${BOLD}${GREEN}GoodTest1 -->${END} ./pipex infile ls ''wc -l'' outfile\n"
 ./pipex infile ls "wc -l" outfile
+valgrind --log-fd=3 ./pipex infile ls "wc -l" outfile
 printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\n${BOLD}${GREEN}GoodTest2 -->${END} ./pipex infile cat cat outfile\n\n"
@@ -288,16 +319,23 @@ printf "JulietteKiloLima" > infile
 printf "Voici ce que contient le fichier infile :\n"
 cat infile
 ./pipex infile cat cat outfile
+valgrind --log-fd=3 ./pipex infile cat cat outfile
 printf "\n\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\n\n${BOLD}${GREEN}GoodTest3 -->${END} ./pipex infile ''ping -c2 google.com'' cat outfile\n\n"
 ./pipex infile "ping -c2 google.com" cat outfile
+valgrind --log-fd=3 ./pipex infile "ping -c2 google.com" cat outfile
 printf "Voici ce que contient maintenant le fichier outfile :\n"
 cat outfile
 printf "\ntype a key to continue\n"
 read
 clear
 
+exec 3>&- #Closing the fd3
+printf "${BOLD}${BLUE}Cleaning your repo...${END}"
+make fclean > /dev/null
+clear
 
-
-check pour valgrind avec des commandes valide et non valide
+printf "${BOLD}${BLUE}Script by Thomas Chalifour${END}"
+sleep 3
+clear
