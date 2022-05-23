@@ -49,5 +49,4 @@ void	setup_input(t_data *prog_data);
 void	setup_output(t_data *prog_data);
 int		exit_args_limit(void);
 
-
 #endif

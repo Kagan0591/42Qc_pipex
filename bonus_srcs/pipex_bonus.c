@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:48:03 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/19 11:44:06 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:20:10 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int	main(int argc, char **argv, char **envp)
 		i = 3;
 	}
 	if (open_infile(&prog_data, argv) == 2)
+	{
+		i = 3;
 		prog_data.infile_flag = 1;
+	}
 	open_outfile(&prog_data, argc, argv);
 	build_cmd_list(&prog_data, i);
 	execution_time(&prog_data, envp);

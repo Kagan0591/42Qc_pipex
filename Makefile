@@ -121,4 +121,4 @@ fclean:	clean
 	@sleep 0.5
 re:	fclean all
 
-phony: all obj test norm leaks clean fclean re bonus
+phony: all obj b_obj test norm leaks clean fclean re bonus

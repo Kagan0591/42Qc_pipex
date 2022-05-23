@@ -1,28 +1,19 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/mnt/c/Users/thomas/Documents/Programmation/42Qc_pipex'
 mkdir -p objs/
- 
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex.o -c srcs/pipex.c
  
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex_mem.o -c srcs/pipex_mem.c
- 
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex_exec.o -c srcs/pipex_exec.c
- 
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex_files_handling.o -c srcs/pipex_files_handling.c
- 
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex_io.o -c srcs/pipex_io.c
- 
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex_dll_addnodes.o -c srcs/pipex_dll_addnodes.c
- 
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex_dll_del.o -c srcs/pipex_dll_del.c
- 
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex_dll_tools1.o -c srcs/pipex_dll_tools1.c
- 
 gcc -Wall -Werror -Wextra -g -I42Qc_libft/ -Iinclude/ -I. -o objs/pipex_error.o -c srcs/pipex_error.c
 make --silent -C 42Qc_libft/
 gcc objs/pipex.o objs/pipex_mem.o objs/pipex_exec.o objs/pipex_files_handling.o objs/pipex_io.o objs/pipex_dll_addnodes.o objs/pipex_dll_del.o objs/pipex_dll_tools1.o objs/pipex_error.o -L42Qc_libft/ -lft -o pipex -lm
 echo "\n\033[34m\033[1mAn executable ' pipex \033[0m\033[34m\033[1m' have been created successfully!\033[0m"
 sleep 1
- 
 make: Leaving directory '/mnt/c/Users/thomas/Documents/Programmation/42Qc_pipex'
  

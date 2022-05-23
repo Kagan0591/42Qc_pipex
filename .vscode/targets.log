@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Wed May 18 18:05:01 2022
+# Make data base, printed on Thu May 19 16:20:20 2022
 
 # Variables
 
@@ -85,7 +86,7 @@ SRCS_DIR = srcs/
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-eb607265-6aa7-4600-a39c-65db864bbced.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-9d0fe3bc-9ea6-400c-92c1-a02e9655f832.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 40)
@@ -119,7 +120,7 @@ HOME = /home/thomas
 # environment
 LOGNAME = thomas
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 ZSH = /home/thomas/.oh-my-zsh
 # environment
@@ -272,7 +273,7 @@ all: obj pipex
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 
-phony: all obj test norm leaks clean fclean re bonus
+phony: all obj b_obj test norm leaks clean fclean re bonus
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -293,7 +294,7 @@ objs/pipex.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-18 18:04:25.5404014
+#  Last modified 2022-05-19 16:17:49.0053414
 #  File has been updated.
 #  Successfully updated.
 
@@ -366,7 +367,7 @@ leaks: re
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 107):
-	valgrind --leaks-check=full --show-leak-kinds=all -s ./test
+	valgrind --leak-check=full --show-leak-kinds=all --show-error-list=yes ./test
 
 obj:
 #  Implicit rule search has not been done.
@@ -494,7 +495,7 @@ pipex: objs/pipex.o objs/pipex_mem.o objs/pipex_exec.o objs/pipex_files_handling
 	@sleep 1
 
 # files hash-table stats:
-# Load=33/1024=3%, Rehash=0, Collisions=3/94=3%
+# Load=33/1024=3%, Rehash=0, Collisions=4/95=4%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
@@ -502,12 +503,12 @@ pipex: objs/pipex.o objs/pipex_mem.o objs/pipex_exec.o objs/pipex_files_handling
 # General ('VPATH' variable) search path:
 # srcs:bonus_srcs
 
-# strcache buffers: 1 (0) / strings = 74 / storage = 1108 B / avg = 14 B
-# current buf: size = 8162 B / used = 1108 B / count = 74 / avg = 14 B
+# strcache buffers: 1 (0) / strings = 75 / storage = 1125 B / avg = 15 B
+# current buf: size = 8162 B / used = 1125 B / count = 75 / avg = 15 B
 
-# strcache performance: lookups = 121 / hit rate = 38%
+# strcache performance: lookups = 122 / hit rate = 38%
 # hash-table stats:
-# Load=74/8192=1%, Rehash=0, Collisions=6/121=5%
-# Finished Make data base on Wed May 18 18:05:01 2022
+# Load=75/8192=1%, Rehash=0, Collisions=8/122=7%
+# Finished Make data base on Thu May 19 16:20:20 2022
 
  

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_files_handling.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalifo <tchalifo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 09:51:03 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/19 12:25:51 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/21 22:24:03 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ void	open_outfile(t_data *prog_data, int argc, char **argv)
 	}
 	else if (prog_data->here_doc_flag == 1)
 		prog_data->filesfd[1] = open(argv[(argc - 1)], \
-			O_WRONLY | O_CREAT | O_APPEND, S_IWUSR | S_IWGRP | S_IWOTH);
+			O_WRONLY | O_APPEND | O_CREAT, \
+				S_IWUSR | S_IWGRP | S_IWOTH | S_IRUSR | S_IRGRP | S_IROTH);
 	else
 		prog_data->filesfd[1] = open(argv[(argc - 1)], \
-			O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR | S_IWGRP | S_IWOTH);
+			O_WRONLY | O_TRUNC | O_CREAT, \
+				S_IWUSR | S_IWGRP | S_IWOTH | S_IRUSR | S_IRGRP | S_IROTH);
 }

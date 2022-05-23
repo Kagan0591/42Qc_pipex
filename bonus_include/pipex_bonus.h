@@ -10,16 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 # define READ_ENDPIPE 0
 # define WRITE_ENDPIPE 1
 
 # include <unistd.h>
 # include <errno.h>
-//# include <sys/stat.h>
-//# include <sys/time.h>
-//# include <sys/types.h>
 # include <sys/wait.h>
 # include <stdio.h>
 # include "libft.h"
@@ -48,6 +45,5 @@ int		execution_time(t_data *prog_data, char **envp);
 void	setup_input(t_data *prog_data);
 void	setup_output(t_data *prog_data);
 int		exit_args_limit(void);
-
 
 #endif

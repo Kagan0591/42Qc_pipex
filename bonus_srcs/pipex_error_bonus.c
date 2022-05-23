@@ -6,7 +6,7 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:48:39 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/18 18:48:41 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/22 20:39:09 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	exit_args_limit(void)
 {
-	perror("Bad number of arguments, try something like < ./pipex infile cmd cmd outfile >\n");
+	write(2, "Bad number of arguments, try something like \
+		./pipex infile cmd cmd outfile \n", 78);
 	return (1);
 }

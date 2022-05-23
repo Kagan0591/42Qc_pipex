@@ -1,55 +1,303 @@
 #!/bin/bash
 
-MY_FUNCTION_RET_VAR
-ORIGIN_FUNCTION_VAR
+# Color code
+END="\033[0;0m"
+BOLD="\033[0;1m"
+BOLD_BLUE="\033[34;1m"
+ITALIC="\033[0;3m"
+ITALIC_CYAN="\033[36;3m"
+UNDERLINE="\033[0;4m"
+BLINK="\033[0;5m"
+BLINK2="\033[0;6m"
+SELECTED="\033[44;34m"
+SELECTEDLINE="\033[K\033[0m"
+BLACK="\033[0;30m"
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+BLUE="\033[1;34m"
+VIOLET="\033[0;35m"
+CYAN="\033[0;36m"
+LIGHTGRAY="\033[1;38m"
+WITHE="\033[1;37"
 
-echo "Partie mandatoire"
+clear
+if [[ -f pipex ]]
+then
+{
+	printf "\n${BOLD}${BLUE}L'executable semble déjà présent, tentative de re-compilation...${END}\n\n"
+	make re
+}
+else
+{
+	printf "\n${BOLD}${BLUE}L'executable n'est pas présent, tentative de compilation...${END}\n\n"
+	make
+}
+fi
 
-echo "Test avec aucun argument"
+FILENAME="/$PWD/valgrind_report.txt"
+exec 3<>$FILENAME # For open the file with fd3
+
+# Début des test
+clear
+printf "${SELECTED}Partie mandatoire${SELECTEDLINE}"
+sleep 2
+clear
+printf "${SELECTED}Test avec plus ou moins de 4 arguments${SELECTEDLINE}\n\n"
+printf "${BOLD}${RED}BadTest1 -->${END} ./pipex\n"
 ./pipex
-
-echo "Test avec moins de 4 arguments"
-echo "T1"
+valgrind --log-fd=3 ./pipex
+printf "${BOLD}${RED}BadTest2 -->${END} ./pipex arg1\n"
 ./pipex arg1
-echo "T2"
+printf "${BOLD}${RED}BadTest3 -->${END} ./pipex arg1 arg2\n"
 ./pipex arg1 arg2
-echo "T3"
+printf "${BOLD}${RED}BadTest4 -->${END} ./pipex arg1 arg2 arg3\n"
 ./pipex arg1 arg2 arg3
-echo "type a key to continue"
-read
-clear
+printf "${BOLD}${RED}BadTest4 -->${END} ./pipex arg1 arg2 arg3 arg4 arg5\n"
+./pipex arg1 arg2 arg3 arg4 arg5
 
-echo "Test avec un fichier d'entré incompatible"
-echo "Explication du test: Si le fichier d'entré n'est pas valide, le programme pipex, comme la commande original, \
-devrait passer la première commande et executer les autres en gardant le input de la première execution sur configuré sur \
-l'entré standard du système. Donc, ici 'ls' serait executé et sa sortie standard serait pipe à l'entré standard de la \
-dernière execution 'cat'"
-./pipex cat "ls $HOME" cat outfile
-echo "Le fichier outfile devrait maintenant contenir les informations retourné par la commande ls, soit le repertoire $HOME"
-echo "Retour de votre programme"
+printf "\n\n${SELECTED}Test avec 4 arguments, tous valide${SELECTEDLINE}\n\n"
+printf "AlphaBravoCharlie" > infile
+printf "Voici ce que contient le fichier infile :\n"
+cat infile
+printf "\n\n${BOLD}${GREEN}GoodTest1 -->${END} ./pipex infile ls ''grep pipex'' outfile\n"
+./pipex infile ls "grep pipex" outfile
+printf "\nVoici ce que contient maintenant le fichier outfile :\n"
 cat outfile
-echo ""
-echo "Retour de la commande ls original du dossier $home"
-ls $home
-echo "type a key to continue"
+printf "\nHit enter to continue\n"
 read
 clear
 
-echo "Test sans fichier de sortie"
-echo "Explication du test: Si le fichier e sortie n'existe pas, le programme pipex devrait le créer avec les droit approprié. S'il n'est pas \
+
+printf "${SELECTED}Test avec un fichier d'entré incompatible${SELECTEDLINE}\n\n"
+printf "Explication du test: Si le fichier d'entré n'est pas valide, le programme pipex, comme la commande original, \
+devrait afficher <No such file or directory> puis sauter la première commande et executer les autres en maintenant le input \
+de la prochaine execution configuré sur l'entré standard du système. Donc, ici le programme remplace le contenue du \
+fichier 'outfile' par la valeur de retour de 'wc -l', ce qui est tout a fait normal, puisque <ls> à été sauté. Ainsi, 'wc -l' retourne 0.\n\n\n"
+echo "Le script @ tom" > outfile
+printf "Voici ce que contient le fichier outfile :\n"
+cat outfile
+printf "\n${BOLD}${RED}BadTest1 -->${END} ./pipex badfile ls wc outfile\n\n"
+printf "Le terminal est figé ? hit enter quelque fois. Puis, pour mettre fin au processus en attente d'input et continuer, \
+utiliser la combinaison ${BOLD}${VIOLET}Ctrl+d${END} \n"
+./pipex badfile ls "wc -l" outfile
+printf "\nMalgré l'erreur encourue, le fichier outfile devrait maintenant contenir un chiffre indiquand le nombre de ligne présent \
+dans le fichier qui est la valeur de retour de wc.\n"
+cat outfile
+printf "\nHit enter to continue\n"
+read
+clear
+
+
+printf "${SELECTED}Test sans fichier de sortie ou simplement inacessible${SELECTEDLINE}\n\n"
+printf "Explication du test: Si le fichier de sortie n'existe pas, le programme pipex devrait le créer avec les droit approprié. S'il n'est pas \
 valide ou que les droits ne vous permet pas d'écrire à l'intérieur, le programme pipex devrait retourer l'erreur \
-'No such file or directory', comme la commande original."
-echo "T1 --> Fichier inexistant, le fichier devrait être maintenant créé et les droits devrait être lecture et écriture < 0666 > ou < --wxr-xr-x >"
+'No such file or directory', comme la commande original.\n\n\n"
+printf "DeltaEchoFoxtrot" > infile
+printf "Voici ce que contient le fichier infile :\n"
+cat infile
+printf "\n\n${BOLD}${GREEN}GoodTest1 (fichier inexistant) -->${END} ./pipex infile cat cat no_outfile\n"
+rm -f no_outfile
 ./pipex infile cat cat no_outfile
+printf "\nVoici ce que contient maintenant le fichier no_outfile créé par pipex et une apercu des droits sur celui-ci :\n"
+cat no_outfile
 ls -l no_outfile
-echo ""
-
-echo "T2 --> Droits dur le fichier insufisant, au minimum les droit sur le fichier devrait être écriture < 0222 >"
-touch out
-chmod 0000 out
-./pipex infile cat cat out
-echo "Le programme devrais "
-rm -f out
-echo "type a key to continue"
+rm -f no_outfile
+touch private_out
+chmod 0000 private_out
+printf "\n\n${BOLD}${RED}BadTest1 (Droit insufisant) -->${END} ./pipex infile cat cat out\n"
+./pipex infile cat cat private_out
+rm -f private_out
+printf "\nHit enter to continue\n"
 read
 clear
+
+
+printf "${SELECTED}Test avec une mauvaise commande${SELECTEDLINE}\n\n"
+printf "Explication du test: Si une commande n'existe pas, le programme pipex devrait retoruner: 'No such file or directory' \
+tel que la commande original retourne et quitter sans rien faire.\n\n"
+printf "${BOLD}${RED}BadTest1 -->${END} ./pipex infile cmmd cat outfile\n\n"
+./pipex infile cmmd cat outfile
+printf "\nHit enter to continue\n"
+read
+clear
+
+
+printf "${SELECTED}Test avec le même fichier infile et outfile${SELECTEDLINE}\n\n"
+printf "Explication du test: Si le infile est le même fichier que le outfile, le programme trunct le fichier avant \
+d'écrire a l'intérieur ce qui résulte la suppression du contenue du fichier infile. Ce qui équivaut a avoir \
+passé un fichier vide au début.\n\n"
+printf "GolfHotelIndia" > infile
+printf "Voici ce que contient le fichier infile :\n"
+cat infile
+printf "\n\n${BOLD}${RED}BadTest1 -->${END} ./pipex infile cat cat infile\n"
+./pipex infile cat cat infile
+printf "\nVoici ce que contient maintenant le fichier infile :\n"
+cat infile
+printf "\ntype a key to continue\n"
+read
+clear
+
+printf "${SELECTED}Test fonctionel${SELECTEDLINE}\n\n"
+printf "Le fichier outfile contient a ce moment :\n"
+cat outfile
+printf "\n\n${BOLD}${GREEN}GoodTest1 -->${END} ./pipex infile ls ''wc -l'' outfile\n"
+./pipex infile ls "wc -l" outfile
+printf "\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\n${BOLD}${GREEN}GoodTest2 -->${END} ./pipex infile cat cat outfile\n\n"
+printf "JulietteKiloLima" > infile
+printf "Voici ce que contient le fichier infile :\n"
+cat infile
+./pipex infile cat cat outfile
+printf "\n\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\n\n${BOLD}${GREEN}GoodTest3 -->${END} ./pipex infile ''ping -c2 google.com'' cat outfile\n\n"
+./pipex infile "ping -c2 google.com" cat outfile
+printf "Voici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\ntype a key to continue\n"
+read
+clear
+
+printf "${SELECTED}Partie bonus${SELECTEDLINE}"
+sleep 2
+clear
+make fclean
+make bonus
+clear
+
+printf "${SELECTED}Test avec moins de 4 arguments${SELECTEDLINE}\n\n"
+printf "${BOLD}${RED}BadTest1 -->${END} ./pipex\n"
+./pipex
+printf "${BOLD}${RED}BadTest2 -->${END} ./pipex arg1\n"
+./pipex arg1
+printf "${BOLD}${RED}BadTest3 -->${END} ./pipex arg1 arg2\n"
+./pipex arg1 arg2
+printf "${BOLD}${RED}BadTest4 -->${END} ./pipex arg1 arg2 arg3\n"
+./pipex arg1 arg2 arg3
+
+printf "\n\n${SELECTED}Test avec 4 arguments ou plus, tous valide${SELECTEDLINE}\n\n"
+printf "AlphaBravoCharlie" > infile
+printf "Voici ce que contient le fichier infile :\n"
+cat infile
+printf "\n\n${BOLD}${GREEN}GoodTest1 -->${END} ./pipex infile ls ''grep pipex'' outfile\n"
+./pipex infile ls "grep pipex" outfile
+printf "\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\n\n${BOLD}${GREEN}GoodTest2 -->${END} ./pipex infile ''nslookup 42quebec.com'' ''grep Server:'' cat outfile\n"
+./pipex infile "nslookup 42quebec.com" "grep Server:" cat outfile
+printf "\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\n\n${BOLD}${GREEN}GoodTest3 -->${END} ./pipex infile ''ping -c2 google.com'' ''grep packets'' ''ls'' ''cat'' outfile\n"
+./pipex infile "ping -c2 google.com" "grep packets" "ls" "cat" outfile
+printf "\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\n\n${BOLD}${GREEN}GoodTest4 -->${END} ./pipex infile ''ping -c2 google.com'' ''grep packets'' ''cat'' ''cat'' outfile\n"
+./pipex infile "ping -c2 google.com" "grep packets" "cat" "cat" outfile
+printf "\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\n\n${BOLD}${GREEN}GoodTest5 -->${END} ./pipex infile cat cat cat cat cat cat cat outfile\n"
+./pipex infile cat cat cat cat cat cat cat outfile
+printf "\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\nHit enter to continue\n"
+read
+clear
+
+
+printf "${SELECTED}Test avec un fichier d'entré incompatible${SELECTEDLINE}\n\n"
+printf "Explication du test: Si le fichier d'entré n'est pas valide, le programme pipex, comme la commande original, \
+devrait afficher <No such file or directory> puis sauter la première commande et executer les autres en maintenant le input \
+de la prochaine execution configuré sur l'entré standard du système. Donc, ici le programme remplace le contenue du \
+fichier 'outfile' par la valeur de retour de 'wc -l', ce qui est tout a fait normal, puisque <ls> à été sauté. Ainsi, 'wc -l' retourne 0.\n\n\n"
+echo "Le script @ tom" > outfile
+printf "Voici ce que contient le fichier outfile :\n"
+cat outfile
+printf "\n${BOLD}${RED}BadTest1 -->${END} ./pipex badfile ls wc outfile\n\n"
+printf "Le terminal est figé ? hit enter quelque fois. Puis, pour mettre fin au processus en attente d'input et continuer, \
+utiliser la combinaison ${BOLD}${VIOLET}Ctrl+d${END} \n"
+./pipex badfile ls "wc -l" outfile
+printf "\nMalgré l'erreur encourue, le fichier outfile devrait maintenant contenir un chiffre indiquand le nombre de ligne présent \
+dans le fichier qui est la valeur de retour de wc.\n"
+cat outfile
+printf "\nHit enter to continue\n"
+read
+clear
+
+
+printf "${SELECTED}Test sans fichier de sortie ou simplement inacessible${SELECTEDLINE}\n\n"
+printf "Explication du test: Si le fichier de sortie n'existe pas, le programme pipex devrait le créer avec les droit approprié. S'il n'est pas \
+valide ou que les droits ne vous permet pas d'écrire à l'intérieur, le programme pipex devrait retourer l'erreur \
+'No such file or directory', comme la commande original.\n\n\n"
+printf "DeltaEchoFoxtrot" > infile
+printf "Voici ce que contient le fichier infile :\n"
+cat infile
+printf "\n\n${BOLD}${GREEN}GoodTest1 (fichier inexistant) -->${END} ./pipex infile cat cat no_outfile\n"
+rm -f no_outfile
+./pipex infile cat cat no_outfile
+printf "\nVoici ce que contient maintenant le fichier no_outfile créé par pipex et une apercu des droits sur celui-ci :\n"
+cat no_outfile
+ls -l no_outfile
+rm -f no_outfile
+touch private_out
+chmod 0000 private_out
+printf "\n\n${BOLD}${RED}BadTest1 (Droit insufisant) -->${END} ./pipex infile cat cat out\n"
+./pipex infile cat cat private_out
+rm -f private_out
+printf "\nHit enter to continue\n"
+read
+clear
+
+
+printf "${SELECTED}Test avec une mauvaise commande${SELECTEDLINE}\n\n"
+printf "Explication du test: Si une commande n'existe pas, le programme pipex devrait retoruner: 'No such file or directory' \
+tel que la commande original retourne et quitter sans rien faire.\n\n"
+printf "${BOLD}${RED}BadTest1 -->${END} ./pipex infile cmmd cat outfile\n\n"
+./pipex infile cmmd cat outfile
+printf "\nHit enter to continue\n"
+read
+clear
+
+
+printf "${SELECTED}Test avec le même fichier infile et outfile${SELECTEDLINE}\n\n"
+printf "Explication du test: Si le infile est le même fichier que le outfile, le programme trunct le fichier avant \
+d'écrire a l'intérieur ce qui résulte la suppression du contenue du fichier infile. Ce qui équivaut a avoir \
+passé un fichier vide au début.\n\n"
+printf "GolfHotelIndia" > infile
+printf "Voici ce que contient le fichier infile :\n"
+cat infile
+printf "\n\n${BOLD}${RED}BadTest1 -->${END} ./pipex infile cat cat infile\n"
+./pipex infile cat cat infile
+printf "\nVoici ce que contient maintenant le fichier infile :\n"
+cat infile
+printf "\ntype a key to continue\n"
+read
+clear
+
+
+printf "${SELECTED}Test fonctionel${SELECTEDLINE}\n\n"
+printf "Le fichier outfile contient a ce moment :\n"
+cat outfile
+printf "\n\n${BOLD}${GREEN}GoodTest1 -->${END} ./pipex infile ls ''wc -l'' outfile\n"
+./pipex infile ls "wc -l" outfile
+printf "\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\n${BOLD}${GREEN}GoodTest2 -->${END} ./pipex infile cat cat outfile\n\n"
+printf "JulietteKiloLima" > infile
+printf "Voici ce que contient le fichier infile :\n"
+cat infile
+./pipex infile cat cat outfile
+printf "\n\nVoici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\n\n${BOLD}${GREEN}GoodTest3 -->${END} ./pipex infile ''ping -c2 google.com'' cat outfile\n\n"
+./pipex infile "ping -c2 google.com" cat outfile
+printf "Voici ce que contient maintenant le fichier outfile :\n"
+cat outfile
+printf "\ntype a key to continue\n"
+read
+clear
+
+
+
+check pour valgrind avec des commandes valide et non valide

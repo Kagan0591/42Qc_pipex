@@ -6,12 +6,12 @@
 /*   By: tchalifo <tchalifo@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:47:08 by tchalifo          #+#    #+#             */
-/*   Updated: 2022/05/18 18:47:11 by tchalifo         ###   ########.fr       */
+/*   Updated: 2022/05/21 22:20:20 by tchalifo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOUBLY_LINKED_LIST_H
-# define DOUBLY_LINKED_LIST_H
+#ifndef DOUBLY_LINKED_LIST_BONUS_H
+# define DOUBLY_LINKED_LIST_BONUS_H
 
 typedef enum t_bool
 {
